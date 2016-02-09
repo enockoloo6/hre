@@ -23,6 +23,20 @@ class Profile_model extends CI_Model{
 	return $this->db->insert_id();
     }
 
+    function update_house_owner_table($owner){
+       // check of the user id is already in the owners table 
+       $this->db->where($owner);   	
+	   $this->db->from('house_owners');
+
+		$query = $this->db->get();		
+		    if ($query->num_rows() == 0){
+		    	$this->db->insert('house_owners', $owner);
+		    	return $this->db->insert_id();
+		    }  
+	
+
+    }
+
 
     /*this function gets a list of all houses in the datbase*/
 	function get_houses(){
@@ -38,16 +52,39 @@ class Profile_model extends CI_Model{
     $this->db->update('house_details', $hdata);
 	}
 
-
-	function get_house_with_id($dataf){
-	$this->db->select('house_id');
-	$this->db->from('house_details');
-	$this->db->where('funding_agency_name', $dataf);
-	$query = $this->db->get();
-	$result = $query->row()->house_id;
-	return $result;
+// this is used to get a house id where the details are same as those just posted in the
+	function get_house_id($dataf){
+		$this->db->select('house_id');
+		$this->db->from('house_details');
+		$this->db->where($dataf);
+		$query = $this->db->get();
+		$result = $query->row()->house_id;
+		return $result;
 	}
 
+// images
+    function add_house_image($img){
+		$this->db->select('*');
+		$this->db->from('images');
+		$query = $this->db->get();
+		return $query->result();
+    } 
+
+    function update_house_image($imgid, $img){
+
+        $this->db->where('image_id', $imgid);
+	    $this->db->update('images', $img);
+		return $this->db->insert_id();
+    }
+
+    function show_images(){
+		$this->db->select('*');
+		$this->db->from('images');
+		$query = $this->db->get();
+		return $query->result();
+    } 
+
+// images
 
 	// GET THE PICTURE OF THE HOUSE SELECTED
     function get_picture_of_selected_house_id($house_id)
@@ -66,4 +103,3 @@ class Profile_model extends CI_Model{
 
 } 
 ?>
-

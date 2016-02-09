@@ -245,7 +245,7 @@
                 </div>
                 <div class="carousel-image wow zoomIn">
 
-                 <img alt="laptop" src="<?php echo(base_url()); ?>assets/Landing_page/img/laptop.png" />
+                 <img alt="laptop" src="<?php echo(base_url()); ?>assets/Landing_page/img/h1.jpg" />
                     <!-- <img src="img/laptop.png" alt="laptop"/> -->
                 </div>
             </div>
@@ -326,7 +326,7 @@
         </div>
         <div class="col-md-6 text-center  wow zoomIn">
         
-        <img alt="dashboard" class="img-responsive" src="<?php echo(base_url()); ?>assets/Landing_page/img/perspective.png" />
+        <img alt="dashboard" class="img-responsive" src="<?php echo(base_url()); ?>assets/Landing_page/img/h4.jpg" />
 
             <!-- <img src="img/perspective.png" alt="dashboard" class="img-responsive"> -->
         </div>
@@ -358,7 +358,7 @@
             <a href="" class="btn btn-primary">Learn more</a>
         </div>
         <div class="col-lg-6 text-right wow fadeInRight">
-         <img alt="dashboard" class="img-responsive pull-right" src="<?php echo(base_url()); ?>assets/Landing_page/img/dashboard.png" />
+         <img alt="dashboard" class="img-responsive pull-right" src="<?php echo(base_url()); ?>assets/Landing_page/img/h2.jpg" />
             <!-- <img src="img/dashboard.png" alt="dashboard" class="img-responsive pull-right"> -->
         </div>
     </div>
@@ -379,7 +379,7 @@
 
                      <img alt="" class="img-responsive img-circle img-small" src="<?php echo(base_url()); ?>assets/Landing_page/img/avatar3.jpg" />
                     <!-- <img src="img/avatar3.jpg" class="img-responsive img-circle img-small" alt=""> -->
-                    <h4><span class="navy">Amelia</span> Smith</h4>
+                    <h4><span class="navy">Peklo</span> O</h4>
                     <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus. </p>
                     <ul class="list-inline social-icon">
                         <li><a href="#"><i class="fa fa-twitter"></i></a>
@@ -396,8 +396,8 @@
                    <img alt="" class="img-responsive img-circle" src="<?php echo(base_url()); ?>assets/Landing_page/img/avatar1.jpg" />
 
                     <!-- <img src="img/avatar1.jpg" class="img-responsive img-circle" alt=""> -->
-                    <h4><span class="navy">John</span> Novak</h4>
-                    <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.</p>
+                    <h4><span class="navy">Enock</span> Oloo</h4>
+                    <p>Enock is the CEO of the HRE group. He also helps the other team members in doing the research about places to help improve customer service</p>
                     <ul class="list-inline social-icon">
                         <li><a href="#"><i class="fa fa-twitter"></i></a>
                         </li>
@@ -413,7 +413,7 @@
 
                     <img alt="" class="img-responsive img-circle img-small" src="<?php echo(base_url()); ?>assets/Landing_page/img/avatar2.jpg" />
                     <!-- <img src="img/avatar2.jpg" class="img-responsive img-circle img-small" alt=""> -->
-                    <h4><span class="navy">Peter</span> Johnson</h4>
+                    <h4><span class="navy">Simon</span> Kahenya</h4>
                     <p>Lorem ipsum dolor sit amet, illum fastidii dissentias quo ne. Sea ne sint animal iisque, nam an soluta sensibus.</p>
                     <ul class="list-inline social-icon">
                         <li><a href="#"><i class="fa fa-twitter"></i></a>

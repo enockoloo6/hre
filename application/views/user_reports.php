@@ -76,14 +76,14 @@
                     <div class="ibox-content">
                         <div>
                                         <span class="pull-right text-right">
-                                        <small>Average value of sales in the past month in: <strong>United states</strong></small>
+                                        <small>Average number of houses rented out in: <strong>Select names of places</strong></small>
                                             <br/>
                                             All sales: 162,862
                                         </span>
                             <h3 class="font-bold no-margins">
-                                Half-year revenue margin
+                                Half-year housing demand comparison
                             </h3>
-                            <small>Sales marketing.</small>
+                            <small>Rented houses.</small>
                         </div>
 
                         <div class="m-t-sm">

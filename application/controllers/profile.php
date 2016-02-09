@@ -35,6 +35,7 @@ class profile extends MY_Controller {
 
         $data['USER_DETAILS'] = $this->user_model->get_user($user_id); 
         $data['HOUSE_DETAILS'] = $this->profile_model->show_all_houses();        
+        $data['IMAGE'] = $this->profile_model->show_images();        
         $this->load->view('profile',$data);
 
     }
@@ -92,46 +93,32 @@ class profile extends MY_Controller {
             'owner' => $this->session->userdata('user_id'),
 
         );
-
         $house_update = $this->profile_model->update_house($house_id,$house_data);
-        $this->show_houses();
+       
+       // update the image table
+        $image = array(                           
+            'image_name' => $full_image_name,
+            //'user_id' => $this->session->userdata('user_id'),
+        );
+        $this->profile_model->update_house_image($house_id,$image);            
+
+    
+        //$this->show_houses();
         redirect(base_url().'index.php/profile');
     }
 }
 
 
-    function delete_house_details($id){
+     function delete_house_details($id){
 
 
-        $this->db->where('house_id', $id);
-        $this->db->delete('house_details');
+         $this->db->where('house_id', $id);
+         $this->db->delete('house_details');
 
-        $this->session->set_flashdata('message', 'House '.$id.' was deleted');
-        redirect(base_url().'index.php/profile', 'refresh');
-    }
-    public function post_new_houses(){
-        $location= ($this->input->post('house_location'));
-        $type= ($this->input->post('house_type'));
-        $rfacility= ($this->input->post('rfacility'));
-        $road= ($this->input->post('road'));
-        $price_range= ($this->input->post('price_range'));
+         $this->session->set_flashdata('message', 'House '.$id.' was deleted');
+         redirect(base_url().'index.php/profile', 'refresh');
+  }
 
-        $house = array(
-            'type' => $type,        	
-            'location' => $location,
-            'rfacility' => $rfacility,
-            'road' => $road,
-            'price' => $price_range,
-            'owner' => $this->session->userdata('user_id'),
-
-
-        );
-
-        $houseId = $this->profile_model->add_a_house($house);
-        redirect(base_url().'index.php/profile');
-
-
-} 
 
 function post_new_house(){
  
@@ -174,10 +161,29 @@ function post_new_house(){
             'photo1' => $full_image_name,
             'owner' => $this->session->userdata('user_id'),
 
-
         );
 
-        $houseId = $this->profile_model->add_a_house($house);
+        // values for the house owner association.
+            $howner = array(
+            'house_owner' => $this->session->userdata('user_id'),                
+            //'source' => $house_id,
+        );       
+        $update_house_owner_table = $this->profile_model->update_house_owner_table($howner);
+        //house ownere association.
+
+        $house_add = $this->profile_model->add_a_house($house);
+        
+        if ($house_add) {$house_id = $this->profile_model->get_house_id($house);
+
+            $image = array(
+            'image_id' => $house_id,                
+            'image_name' => $full_image_name,
+            'user_id' => $this->session->userdata('user_id'),
+        );
+        $this->profile_model->add_house_image($image);            
+
+        }       
+
         redirect(base_url().'index.php/profile');
  
         // Output control

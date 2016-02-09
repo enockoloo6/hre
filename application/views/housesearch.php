@@ -15,7 +15,7 @@
         </div>
         <div class="col-sm-8">
             <div class="title-action">
-                <a href="" class="btn btn-primary">Search for locations using google map</a>
+                <a href="<?= base_url();?>index.php/google_map" class="btn btn-primary">Search for locations using google map</a>
 
                 <a href="" class="btn btn-primary" data-toggle="modal" data-target="#housesearchModal">Search for a house</a>
             </div>
@@ -44,11 +44,13 @@
 
                                                 <div class="form-group"><label>type of house</label> <input type="email" name="" placeholder="house type" class="form-control"></div>
 
-                                                <div class="form-group"><label>Recreational facility</label> <input type="email" name="" placeholder="Any recreational facility you wish to find within or around" class="form-control"></div>
+                                                <div class="form-group"><label>Health facility</label> <input type="email" name="" placeholder="Any recreational facility you wish to find within or around" class="form-control"></div>
 
+                                                <div class="form-group"><label>Recreational facility</label> <input type="email" name="" placeholder="street/avenue do you wish to find a home" class="form-control"></div>
+                                                
                                                 <div class="form-group"><label>main road</label> <input type="email" name="" placeholder="street/avenue do you wish to find a home" class="form-control"></div>
 
-                                                <div class="form-group"><label>Single home or shared</label> <input type="email" name="" placeholder="answer with yes no" class="form-control"></div>
+                                                <div class="form-group hide"><label>Single home or shared</label> <input type="email" name="" placeholder="answer with yes no" class="form-control"></div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
@@ -69,7 +71,7 @@
                 <div class="col-lg-5">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Animation without caption</h5>
+                            <h5>Some of the recommendations for you</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -115,7 +117,7 @@
                 <div class="col-lg-7">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Animation and Caption</h5>
+                            <!-- <h5>Animation and Caption</h5> -->
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -177,7 +179,7 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Big gallery carousel</h5>
+                            <h5>Recommended houses</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>

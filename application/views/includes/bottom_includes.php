@@ -17,6 +17,7 @@
 
 <!-- Custom msh javascript -->
 <script src="<?php echo(base_url()); ?>assets/js/mshcustom/validateUserActions.js"></script>
+<script src="<?php echo(base_url()); ?>assets/js/mshcustom/google_maps_hre.js"></script>
 
 <!-- Mainly scripts -->
 
@@ -339,7 +340,6 @@ $("#ionrange_4").ionRangeSlider({
 
     });
 </script>
-
     
 </body>
 

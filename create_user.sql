@@ -1,10 +1,9 @@
 -- Create impact user
-CREATE USER 'msh'@'localhost' IDENTIFIED BY 'msh>otero12345625lll>?>>';
+CREATE USER 'hre'@'localhost' IDENTIFIED BY 'hre>Peklo123@';
 -- Grant permissions to impact user
-GRANT INSERT ON msh_db.* TO 'msh'@'localhost';
-GRANT DELETE ON msh_db.* TO 'msh'@'localhost';
-GRANT UPDATE ON msh_db.* TO 'msh'@'localhost';
-GRANT SELECT ON msh_db.* TO 'msh'@'localhost';
+GRANT INSERT ON hredb.* TO 'hre'@'localhost';
+GRANT DELETE ON hredb.* TO 'hre'@'localhost';
+GRANT UPDATE ON hredb.* TO 'hre'@'localhost';
+GRANT SELECT ON hredb.* TO 'hre'@'localhost';
 -- Reload permissions 
 FLUSH PRIVILEGES;
-

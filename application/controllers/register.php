@@ -184,14 +184,25 @@ function post_profile_photo(){
             $full_image_name = $myownpath.$file_name;
             //$uid=$this->input->post('user_id');
 
+  $uid = $this->session->userdata('user_id');
 // post the photo name and other form fields to the database
         $ppicture = array(
 
             'photo' => $full_image_name,
         );
 
-        $uid = $this->session->userdata('user_id');
-        $photo = $this->user_model->add_a_photo_to_profile($uid,$ppicture);
+       $image = array(
+            //'image_id' => $house_id,                
+            'image_name' => $full_image_name,
+            'user_id' => $uid,
+        );
+
+        
+        //$photo = $this->user_model->add_a_photo_to_profile($uid,$ppicture);               
+        $this->load->model('profile_model');      
+        $this->profile_model->add_house_image($image);            
+
+
         redirect(base_url().'index.php/profile'); 
     } 
 }
