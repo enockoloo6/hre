@@ -38,11 +38,40 @@
 
                                         <form action="<?= base_url();?>index.php/post_new_house" method="post" enctype="multipart/form-data">
                                         <div class="modal-body">
-                                                <div class="form-group"><label>Location</label> <input type="email" name="" placeholder="Location choice" class="form-control"></div>
+                                                <label>Location</label>
+                                                    <select name="house_location" class="form-control">  
+                                                     <option>--SELECT--</option>                                                                                                                   
+                                                     <option>Langata</option>
+                                                     <option>Ngong</option>
+                                                     <option>Rongai</option>                                                               
+                                                     <option>Dagoretti</option>                                                               
+                                                     <option>Adams</option>                                                               
+                                                     <option>Kileleshwa</option>                                                               
+                                                     <option>Kibera</option>                                                               
+                                                     <option>Buruburu</option>                                                               
+                                                     <option>Baba dogo</option>                                                               
+                                                    </select>    
 
-                                                <div class="form-group"><label>Price range.</label> <input type="email" name="" placeholder="Enter your range of price from the menu provided" class="form-control"></div>
+                                                <label>Type of house</label>
+                                                    <select name="house_type" class="form-control"> 
+                                                     <option>--SELECT--</option>                                                                                                                   
+                                                     <option>Single room</option>
+                                                     <option>Double room</option>
+                                                     <option>Servant quarter</option>
+                                                     <option>Bed sitter</option>
+                                                     <option>One bedroom</option>
+                                                     <option>Two bedroom</option>
+                                                     <option>Three bedroom+</option>
+                                                    </select>
 
-                                                <div class="form-group"><label>type of house</label> <input type="email" name="" placeholder="house type" class="form-control"></div>
+                                                <label>Price range.</label>
+                                                    <select name="price_range" class="form-control">                                                                 
+                                                     <option>--SELECT--</option>
+                                                     <option>1000-3000</option>
+                                                     <option>3001-5000</option>
+                                                     <option>5001-10000</option>
+                                                     <option>10001+</option>
+                                                    </select>
 
                                                 <div class="form-group"><label>Health facility</label> <input type="email" name="" placeholder="Any recreational facility you wish to find within or around" class="form-control"></div>
 
@@ -50,7 +79,6 @@
                                                 
                                                 <div class="form-group"><label>main road</label> <input type="email" name="" placeholder="street/avenue do you wish to find a home" class="form-control"></div>
 
-                                                <div class="form-group hide"><label>Single home or shared</label> <input type="email" name="" placeholder="answer with yes no" class="form-control"></div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
@@ -71,7 +99,7 @@
                 <div class="col-lg-5">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Some of the recommendations for you</h5>
+                            <h5>Recommended houses</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -99,10 +127,6 @@
                                     <div class="item">
                                         <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big1.jpg">
                                     </div>
-                                    <div class="item ">
-                                        <img alt="image" class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big2.jpg">
-                                    </div>
-
                                 </div>
                                 <a data-slide="prev" href="#carousel1" class="left carousel-control">
                                     <span class="icon-prev"></span>
@@ -111,7 +135,25 @@
                                     <span class="icon-next"></span>
                                 </a>
                             </div>
-                        </div>
+
+                            <form action="<?= base_url();?>index.php/housesearch/post_the_rating" id="doRating" method="post" enctype="multipart/form-data">
+                                                           
+                            
+                             <button id="rate1" onClick="rateone()" type="button"><i class="fa fa-star"></i></button>
+                             <button id="rate2" onClick="ratetwo()" type="button"><i class="fa fa-star"></i></button>
+                             <button id="rate3" onClick="ratethree()" type="button"><i class="fa fa-star"></i></button>
+                             <button id="rate4" onClick="ratefour()" type="button"><i class="fa fa-star"></i></button>
+                             <!-- <button id="rate5" onClick="ratefive()" type="button"><i class="fa fa-star"></i></button> -->
+                             <button id="rate5" onClick="ratefive()" class="btn btn-default  dim " type="button"><i class="fa fa-star"></i></button>
+
+                             <input id="ratingvalue" class="hide" type="text" name="rating">                             
+                             <input class="hide" type="text" name="house_id"> 
+
+                             <button id="removeratings" type="button" class="btn btn-default btn-xs" onClick="removerating()"><i class="fa fa-warning">clear</i></button>
+
+                             <button class="btn btn-primary btn-xs  dim " type="submit">rate</button>
+                         </form>
+                        </div>                                
                     </div>
                 </div>
                 <div class="col-lg-7">

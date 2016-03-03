@@ -30,31 +30,13 @@
                 <div class="col-md-10">
                     <div class="ibox">
                         <div class="ibox-content">
-                            <p>
-                                With google maps <a href="https://developers.google.com/maps/documentation/javascript/reference#MapOptions">API</a> You can easy customize your map.
-                            </p>
-
                             <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+                            <input id="fe" type="button" value="Geocode">
                             <div class="hre-googlemap" id="map1"></div>
                         </div>
                     </div>
                 </div>
             </div>
-<!--                 <div class="col-md-6">
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5>Custom theme 1</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <p>
-                                This is a custom theme for Google map.
-                            </p>
-                            <div class="google-map" id="map2"></div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
 
-
-     
+             
 <?php require_once("includes/footer.php");

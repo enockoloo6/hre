@@ -84,3 +84,109 @@ function validateDate(txtDate) {
     }
 }
 /* *****************end validate Date ********************** */
+
+/******change ids on button click*******/
+
+function applyAttributes(){
+    // document.getElementById("e1").setAttribute("align","center");
+    document.getElementById("rate1").setAttribute("class","btn btn-default  dim ");
+    document.getElementById("rate2").setAttribute("class","btn btn-default  dim ");
+    document.getElementById("rate3").setAttribute("class","btn btn-default  dim ");
+    document.getElementById("rate4").setAttribute("class","btn btn-default  dim ");
+    document.getElementById("rate5").setAttribute("class","btn btn-default  dim ");
+    // document.getElementById("e3").setAttribute("title","Navigate to my site");
+}
+window.onload = applyAttributes;
+function applyAtt(target,att,attVal){
+    document.getElementById(target).setAttribute(att,attVal);
+}
+function removeAtt(target,att){
+    document.getElementById(target).removeAttribute(att);
+}
+
+function ratefive(){
+    document.getElementById("rate1").setAttribute("class","btn btn-warning  dim ");
+    document.getElementById("rate2").setAttribute("class","btn btn-warning  dim ");
+    document.getElementById("rate3").setAttribute("class","btn btn-warning  dim ");
+    document.getElementById("rate4").setAttribute("class","btn btn-warning  dim ");
+
+    document.getElementById("rate5").removeAttribute("class");
+    document.getElementById("rate5").setAttribute("class","btn btn-warning  dim ");
+
+    
+    document.getElementById("ratingvalue").setAttribute("value","5");
+
+}
+
+function ratefour(){
+    document.getElementById("rate1").setAttribute("class","btn btn-warning  dim ");
+    document.getElementById("rate2").setAttribute("class","btn btn-warning  dim ");
+    document.getElementById("rate3").setAttribute("class","btn btn-warning  dim ");
+    document.getElementById("rate4").setAttribute("class","btn btn-warning  dim ");
+    document.getElementById("rate5").setAttribute("class","btn btn-default  dim ");
+    
+    document.getElementById("ratingvalue").setAttribute("value","4");
+
+}
+
+function ratethree(){
+    document.getElementById("rate1").setAttribute("class","btn btn-warning  dim ");
+    document.getElementById("rate2").setAttribute("class","btn btn-warning  dim ");
+    document.getElementById("rate3").setAttribute("class","btn btn-warning  dim ");
+    document.getElementById("rate4").setAttribute("class","btn btn-default  dim ");
+    document.getElementById("rate5").setAttribute("class","btn btn-default  dim ");
+
+    document.getElementById("ratingvalue").setAttribute("value","3");
+
+}
+
+function ratetwo(){
+    document.getElementById("rate1").setAttribute("class","btn btn-warning  dim ");
+    document.getElementById("rate2").setAttribute("class","btn btn-warning  dim ");    
+    document.getElementById("rate3").setAttribute("class","btn btn-default  dim ");
+    document.getElementById("rate4").setAttribute("class","btn btn-default  dim ");
+    document.getElementById("rate5").setAttribute("class","btn btn-default  dim ");
+
+    document.getElementById("ratingvalue").setAttribute("value","2");
+
+}
+
+function rateone(){
+    document.getElementById("rate1").setAttribute("class","btn btn-warning  dim ");
+    document.getElementById("rate2").setAttribute("class","btn btn-default  dim ");    
+    document.getElementById("rate3").setAttribute("class","btn btn-default  dim ");
+    document.getElementById("rate4").setAttribute("class","btn btn-default  dim ");
+    document.getElementById("rate5").setAttribute("class","btn btn-default  dim ");
+
+    document.getElementById("ratingvalue").setAttribute("value","1");
+
+}
+
+function removerating(){
+
+    document.getElementById("rate1").setAttribute("class","btn btn-default  dim ");
+    document.getElementById("rate2").setAttribute("class","btn btn-default  dim ");    
+    document.getElementById("rate3").setAttribute("class","btn btn-default  dim ");
+    document.getElementById("rate4").setAttribute("class","btn btn-default  dim ");
+    document.getElementById("rate5").setAttribute("class","btn btn-default  dim ");
+
+    document.getElementById("ratingvalue").setAttribute("value","");
+
+}
+/**************************************/
+
+/***************validate the rating************/
+
+
+  $("#doRating").submit(function(){
+         if ($('#ratingvalue').val() == "" || $('#ratingvalue').val() == NULL) {
+             alert('please do rating first')
+             return false;
+         }
+         else {
+             alert('you succesfully rated the house')
+             return true;
+         }
+  }); 
+
+    

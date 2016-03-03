@@ -1,4 +1,4 @@
-        // When the window has finished loading google map
+  // When the window has finished loading google map
         google.maps.event.addDomListener(window, 'load', init);
 
         function init() {
@@ -75,9 +75,55 @@
             });
             map1.fitBounds(bounds);
           });
-          // [END region_getplaces]
+          // [END region_getplaces] 
 
-
-                       
-                      
+          //show the places with houses on button click
+            var geocoder = new google.maps.Geocoder();
+            document.getElementById('fe').addEventListener('click', function() {
+              geocodeAddress(geocoder, map1);
+              //geocodemultipleAddresses();
+            });
+            
         }
+
+function geocodeAddress(geocoder, resultsMap) {
+  //var address = document.getElementById('address').value;
+  var i;
+  var address = ["Kibera", "Githurai", "Ayany"];
+  for( i=0; i< address.length; i++) {
+    geocoder.geocode(
+      {
+        'address': address[i]
+      },
+      function(results, status) {
+        console.log("results", results);
+        console.log("status", status);
+      if (status === google.maps.GeocoderStatus.OK) {
+        resultsMap.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: resultsMap,
+          position: results[0].geometry.location
+        });
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
+}
+
+function geocodemultipleAdresses(map1){
+
+    var elevator;
+    var addresses = ["Norway"];
+
+    for (var x = 0; x < addresses.length; x++) {
+        $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) {
+            var p = data.results[0].geometry.location
+            var latlng = new google.maps.LatLng(p.lat, p.lng);
+            new google.maps.Marker({
+                position: latlng,
+                map: map1
+            });
+          });
+      }
+    }

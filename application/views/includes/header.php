@@ -33,10 +33,6 @@ require_once("top_includes.php");
 
             </li>
 
-<!--             <li>
-                <a href="<?php echo(base_url()); ?>"><i class="fa fa-star"></i> <span class="nav-label" style="font-size:16px">Landing Page</span> </a>
-            </li> -->
-
             <li>
                 <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label" style="font-size:16px" >Reports</span><span
                         class="fa arrow"></span></a>
@@ -53,6 +49,7 @@ require_once("top_includes.php");
 
                     <li><a style="font-size:15px"href="<?php echo(base_url()); ?>index.php/profile">Profile</a></li>
                     <li><a style="font-size:15px"href="<?php echo(base_url()); ?>index.php/housesearch">Search for a house</a></li>
+                    <li><a style="font-size:15px"href="<?php echo(base_url()); ?>index.php/housesearch/show_recommendations">recommendations</a></li>
 
                     <li><a style="font-size:15px"href="<?php echo(base_url()); ?>index.php/users">Users</a></li>
                    

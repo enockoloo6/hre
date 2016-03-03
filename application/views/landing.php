@@ -44,7 +44,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" data-toggle="modal" data-target="#hploginModal" href="#">Post a new house</a>
+                    <a class="navbar-brand"  <?php if(! $this->session->userdata('user_id')){?> data-toggle="modal" <?php } ?> data-target="#hploginModal" href="<?php if( $this->session->userdata('user_id')) echo (base_url().'index.php/profile');?>">Post a new house</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">

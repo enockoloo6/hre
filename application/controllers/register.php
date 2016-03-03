@@ -54,20 +54,24 @@ class Register extends CI_Controller {
                 'is_logged_in' => true,
                 'role' => $role,
                 'f_name'=>$f_name,
-                'photo' => $photo,
+                'photo' => $this->user_model->get_profile_image_for_the_logged_in_user($user_id),
                 'other_names'=>$other_names
             );
             $this->session->set_userdata($data);
+
             if($role==0)
             {
+                $this->user_model->get_profile_image_for_the_logged_in_user();
                 redirect('index.php/housesearch');
             }
             elseif($role==1)
             {
+                $this->user_model->get_profile_image_for_the_logged_in_user();                
                 redirect('index.php/profile');
             }
             elseif($role==-1)
             {
+                $this->user_model->get_profile_image_for_the_logged_in_user();                
                 redirect('index.php/home');
             }
             else
@@ -102,7 +106,7 @@ class Register extends CI_Controller {
                         $role = $is_valid[0]['role'];
                         $user_id = $is_valid[0]['user_id'];
                         $f_name = $is_valid[0]['f_name'];
-                        $photo = $is_valid[0]['photo'];
+                        //$photo = $is_valid[0]['photo'];
                         //print_r($is_valid);
                         $data = array(
                             'email' => $email,
@@ -110,22 +114,26 @@ class Register extends CI_Controller {
                             'is_logged_in' => true,
                             'role' => $role,
                             'f_name' => $f_name,
-                            'photo' => $photo,  
+                            //'photo' => $photo,  
                             'other_names'=>$other_names
 
                         );
                         $this->session->set_userdata($data);
 
-                        redirect(base_url()."index.php/profile");
+
+                $this->user_model->get_profile_image_for_the_logged_in_user();
+                redirect(base_url()."index.php/profile");
                     
             }
 
 
             elseif ($role == 0) {
+                $this->user_model->get_profile_image_for_the_logged_in_user();                
                 redirect(base_url()."index.php/housesearch");                
             }
 
             elseif ($role == -1) {
+                $this->user_model->get_profile_image_for_the_logged_in_user();
                 redirect(base_url()."index.php/users");                
             }
         }
@@ -196,18 +204,14 @@ function post_profile_photo(){
             'image_name' => $full_image_name,
             'user_id' => $uid,
         );
-
         
-        //$photo = $this->user_model->add_a_photo_to_profile($uid,$ppicture);               
-        $this->load->model('profile_model');      
-        $this->profile_model->add_house_image($image);            
-
-
+        //echo $full_image_name.$uid;      
+        $this->user_model->add_profile_photo($image);
         redirect(base_url().'index.php/profile'); 
     } 
 }
 
-private function set_upload_options(){   
+  private function set_upload_options(){   
     //  upload an image options
     $config = array();
     $config['upload_path'] = './assets/img2/';

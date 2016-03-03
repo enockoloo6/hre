@@ -25,7 +25,6 @@ class User_model extends CI_Model
 
 
 
-
     //create_member
 
     function new_user($f_name,$other_names,$phone_number,$national_id,$password,$email,$role=0)
@@ -102,11 +101,52 @@ class User_model extends CI_Model
         return $users->result();
     }
 
+// this is to be used during the sign up to initialize the photo
+    function get_profile_image_for_the_logged_in_user($user_identification){
+            
+    //$user_identification = $this->session->userdata('user_id');
+            $image = array(
+            'Image_id' => NULL,       
+            'user_id' => $user_identification,
+            );
 
-    function add_a_photo_to_profile($uid,$udata){
-    $this->db->where('user_id', $uid);
-    $this->db->update('users', $udata);
+            $this->db->select('image_name');
+            $this->db->from('images');
+            $this->db->where($image); 
+            $query = $this->db->get();
+            $result = $query->row()->image_name;
+            return $result;
+
+    $this->session->set_userdata(array('image_name' => $result));
+    
     }
+    //end of the photo
+
+
+    function add_profile_photo($img){
+        // check of the user id is already in the owners table 
+            $user_identification = $this->session->userdata('user_id');
+
+            $image = array(
+            'Image_id' => NULL,       
+            'user_id' => $user_identification,
+            );
+        //use the user id to update not all the data
+        $this->db->where($image);    
+        $this->db->from('images');
+
+        $query = $this->db->get();      
+            if ($query->num_rows() > 0){
+
+                $this->db->where($image);
+                $this->db->update('images', $img);           
+            }
+            else if($query->num_rows() == 0){
+            $insert = $this->db->insert('images', $img);
+            $this->session->set_userdata(array('photo' => $img['image_name']));
+            return $insert;
+            }
+        }
 
 }
 

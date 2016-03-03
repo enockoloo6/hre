@@ -123,7 +123,7 @@
         </div>
         </div>
         </div>
-        </div>
+
     </div>
     <div class="modal inmodal" id="add_user_modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">

@@ -63,11 +63,11 @@ class Profile_model extends CI_Model{
 	}
 
 // images
+
     function add_house_image($img){
-		$this->db->select('*');
-		$this->db->from('images');
-		$query = $this->db->get();
-		return $query->result();
+
+	    $this->db->insert('images', $img);
+	 	return $this->db->insert_id();
     } 
 
     function update_house_image($imgid, $img){
@@ -84,6 +84,18 @@ class Profile_model extends CI_Model{
 		return $query->result();
     } 
 
+  //   function show_images(){
+
+  //       $user_id = $this->session->userdata('user_id');
+
+		// $this->db->select('image_name');
+		// $this->db->from('images');
+  //       $this->db->where('user_id', $user_id && 'Image_id', 'null');		
+		// $query = $this->db->get();
+  //       $result = $query->row()->image_name;
+		// return $result;
+  //   } 
+
 // images
 
 	// GET THE PICTURE OF THE HOUSE SELECTED
@@ -97,9 +109,7 @@ class Profile_model extends CI_Model{
         return $result;
     }
 
-
-
 	/*---------------------------------------------------------------------------------------------------*/
 
 } 
-?>
+?>-

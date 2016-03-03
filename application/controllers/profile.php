@@ -100,10 +100,8 @@ class profile extends MY_Controller {
             'image_name' => $full_image_name,
             //'user_id' => $this->session->userdata('user_id'),
         );
-        $this->profile_model->update_house_image($house_id,$image);            
-
-    
-        //$this->show_houses();
+        $this->profile_model->update_house_image($house_id,$image); 
+             //$this->show_houses();
         redirect(base_url().'index.php/profile');
     }
 }
@@ -115,7 +113,7 @@ class profile extends MY_Controller {
          $this->db->where('house_id', $id);
          $this->db->delete('house_details');
 
-         $this->session->set_flashdata('message', 'House '.$id.' was deleted');
+         $this->session->set_flashdata('message', 'House '.$id.' was deleted succesfully');
          redirect(base_url().'index.php/profile', 'refresh');
   }
 
@@ -166,10 +164,10 @@ function post_new_house(){
         // values for the house owner association.
             $howner = array(
             'house_owner' => $this->session->userdata('user_id'),                
-            //'source' => $house_id,
+            //'source => $house_id,
         );       
         $update_house_owner_table = $this->profile_model->update_house_owner_table($howner);
-        //house ownere association.
+        //house owner association.
 
         $house_add = $this->profile_model->add_a_house($house);
         
