@@ -18,6 +18,7 @@
                 <a href="<?= base_url();?>index.php/google_map" class="btn btn-primary">Search for locations using google map</a>
 
                 <a href="" class="btn btn-primary" data-toggle="modal" data-target="#housesearchModal">Search for a house</a>
+                <a href="<?= base_url();?>index.php/housesearch/show_recommendations" class="btn btn-primary">See recommended houses</a>
             </div>
         </div>
     </div>
@@ -88,96 +89,16 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                            <!-- end of the modal form -->
+                <!-- end of the modal form -->
 
 
 
         <div class="wrapper wrapper-content">
             <div class="row">
-                <div class="col-lg-5">
+ 
+                <div class="col-lg-9">
                     <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>Recommended houses</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">Config option 1</a>
-                                    </li>
-                                    <li><a href="#">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="carousel slide" id="carousel1">
-                                <div class="carousel-inner">
-                                    <div class="item active">
-                                        <img alt="image" class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big3.jpg">
-                                    </div>
-                                    <div class="item">
-                                        <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big1.jpg">
-                                    </div>
-                                </div>
-                                <a data-slide="prev" href="#carousel1" class="left carousel-control">
-                                    <span class="icon-prev"></span>
-                                </a>
-                                <a data-slide="next" href="#carousel1" class="right carousel-control">
-                                    <span class="icon-next"></span>
-                                </a>
-                            </div>
 
-                            <form action="<?= base_url();?>index.php/housesearch/post_the_rating" id="doRating" method="post" enctype="multipart/form-data">
-                                                           
-                            
-                             <button id="rate1" onClick="rateone()" type="button"><i class="fa fa-star"></i></button>
-                             <button id="rate2" onClick="ratetwo()" type="button"><i class="fa fa-star"></i></button>
-                             <button id="rate3" onClick="ratethree()" type="button"><i class="fa fa-star"></i></button>
-                             <button id="rate4" onClick="ratefour()" type="button"><i class="fa fa-star"></i></button>
-                             <!-- <button id="rate5" onClick="ratefive()" type="button"><i class="fa fa-star"></i></button> -->
-                             <button id="rate5" onClick="ratefive()" class="btn btn-default  dim " type="button"><i class="fa fa-star"></i></button>
-
-                             <input id="ratingvalue" class="hide" type="text" name="rating">                             
-                             <input class="hide" type="text" name="house_id"> 
-
-                             <button id="removeratings" type="button" class="btn btn-default btn-xs" onClick="removerating()"><i class="fa fa-warning">clear</i></button>
-
-                             <button class="btn btn-primary btn-xs  dim " type="submit">rate</button>
-                         </form>
-                        </div>                                
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <!-- <h5>Animation and Caption</h5> -->
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">Config option 1</a>
-                                    </li>
-                                    <li><a href="#">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
                         <div class="ibox-content ">
                             <div class="carousel slide" id="carousel2">
                                 <ol class="carousel-indicators">
@@ -217,92 +138,7 @@
                 </div>
 
             </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>Recommended houses</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">Config option 1</a>
-                                    </li>
-                                    <li><a href="#">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="carousel slide" id="carousel3">
-                                <div class="carousel-inner">
-                                    <div class="item gallery active left">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <img alt="image" class="<?php echo(base_url()); ?>assets/img-responsive" src="img/p_big1.jpg">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <img alt="image" class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big2.jpg">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <img alt="image"  class="img-responsive"  src="<?php echo(base_url()); ?>assets/img/p_big3.jpg">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big1.jpg">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item gallery next left">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big3.jpg">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big1.jpg">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <img alt="image"  class="img-responsive"  src="<?php echo(base_url()); ?>assets/img/p_big2.jpg">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big1.jpg">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item gallery">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big2.jpg">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big3.jpg">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <img alt="image"  class="img-responsive"  src="<?php echo(base_url()); ?>assets/img/p_big1.jpg">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <img alt="image" class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big2.jpg">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-slide="prev" href="#carousel3" class="left carousel-control">
-                                    <span class="icon-prev"></span>
-                                </a>
-                                <a data-slide="next" href="#carousel3" class="right carousel-control">
-                                    <span class="icon-next"></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
 <!-- message -->

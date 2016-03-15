@@ -87,13 +87,20 @@
         }
 
 function geocodeAddress(geocoder, resultsMap) {
-  //var address = document.getElementById('address').value;
-  var i;
-  var address = ["Kibera", "Githurai", "Ayany"];
-  for( i=0; i< address.length; i++) {
+
+  //var i;
+  //var address = ["Kibera", "Githurai", "Ayany"];
+  //for( i=0; i< address.length; i++) {
+
+  $.getJSON('http://localhost/xampp/hre/index.php/housesearch/house_locations', function(data) {
+    $(data).each(function(key, value) {
+
+    address = value + ",Nairobi,Kenya";
+
     geocoder.geocode(
       {
-        'address': address[i]
+        // 'address': address[i]
+        'address': address
       },
       function(results, status) {
         console.log("results", results);
@@ -107,23 +114,6 @@ function geocodeAddress(geocoder, resultsMap) {
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
-    });
-  }
+    });});});
+  //}
 }
-
-function geocodemultipleAdresses(map1){
-
-    var elevator;
-    var addresses = ["Norway"];
-
-    for (var x = 0; x < addresses.length; x++) {
-        $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+addresses[x]+'&sensor=false', null, function (data) {
-            var p = data.results[0].geometry.location
-            var latlng = new google.maps.LatLng(p.lat, p.lng);
-            new google.maps.Marker({
-                position: latlng,
-                map: map1
-            });
-          });
-      }
-    }

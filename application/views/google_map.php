@@ -7,19 +7,19 @@
 -->
        <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-sm-4">
-            <h2>This is main title</h2>
             <ol class="breadcrumb">
-                <li>
-                    <a href="index.html">This is</a>
-                </li>
+
                 <li class="active">
                     <strong>Google maps</strong>
+                          
+                    <br><br><button id="fe" class="btn btn-primary">Find house locations in the map</button>                   
                 </li>
+
             </ol>
         </div>
           <div class="col-sm-8">
             <div class="title-action">
-                <a href="<?= base_url();?>index.php/housesearch" class="btn btn-primary">back to house search</a>
+                <a href="<?= base_url();?>index.php/housesearch" class="btn btn-primary">house search</a>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
                     <div class="ibox">
                         <div class="ibox-content">
                             <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-                            <input id="fe" type="button" value="Geocode">
+                            <!-- <input id="fe" type="button" value="Find house locations in the map"> -->
                             <div class="hre-googlemap" id="map1"></div>
                         </div>
                     </div>

@@ -115,6 +115,8 @@ function ratefive(){
 
     
     document.getElementById("ratingvalue").setAttribute("value","5");
+    //document.getElementById("house-id1").setAttribute("value",$('#house-id2').val());
+
 
 }
 
@@ -126,6 +128,8 @@ function ratefour(){
     document.getElementById("rate5").setAttribute("class","btn btn-default  dim ");
     
     document.getElementById("ratingvalue").setAttribute("value","4");
+    //document.getElementById("house-id1").setAttribute("value",$('#house-id2').val());
+
 
 }
 
@@ -137,6 +141,11 @@ function ratethree(){
     document.getElementById("rate5").setAttribute("class","btn btn-default  dim ");
 
     document.getElementById("ratingvalue").setAttribute("value","3");
+    //var ass = document.getElementById("house-id1").removeAttribute("value");
+    
+    //document.getElementById("house-id1").setAttribute("value",document.getElementById("house-id2"));
+  
+
 
 }
 
@@ -148,6 +157,7 @@ function ratetwo(){
     document.getElementById("rate5").setAttribute("class","btn btn-default  dim ");
 
     document.getElementById("ratingvalue").setAttribute("value","2");
+    //document.getElementById("house-id1").setAttribute("value",$('#house-id2').val());
 
 }
 
@@ -159,6 +169,8 @@ function rateone(){
     document.getElementById("rate5").setAttribute("class","btn btn-default  dim ");
 
     document.getElementById("ratingvalue").setAttribute("value","1");
+    // document.getElementById("house-id1").setAttribute("value",$('#house-id2').val());
+
 
 }
 
@@ -171,6 +183,8 @@ function removerating(){
     document.getElementById("rate5").setAttribute("class","btn btn-default  dim ");
 
     document.getElementById("ratingvalue").setAttribute("value","");
+    
+
 
 }
 /**************************************/
@@ -178,15 +192,46 @@ function removerating(){
 /***************validate the rating************/
 
 
-  $("#doRating").submit(function(){
-         if ($('#ratingvalue').val() == "" || $('#ratingvalue').val() == NULL) {
+  $("#doRating").click(function(){    
+
+         if ($('#ratingvalue').val() == "" || $('#ratingvalue').val() == NULL || $('#ratingvalue').val() == "0") {         
+         //var theratingvalue = $('#ratingvalue').val();
+
              alert('please do rating first')
+             //alert(theratingvalue)
              return false;
          }
-         else {
-             alert('you succesfully rated the house')
-             return true;
-         }
-  }); 
+         else{
+
+              $.getJSON('http://localhost/xampp/hre/index.php/housesearch/house_locations', function(data) {
+              $(data).each(function(key, value) {
+                alert(value)
+              });
+          });
+
+
+        }
+    });
+
+//hiding and showing a div in the housing recommendation view
+ $(document).ready(function() {
+    //$('#hiddenrating').hide(); 
+    $('#showrater').click(function(){       
+    //$('#hiddenrating').show();
+    document.getElementById("hiddenrating").removeAttribute("class");
+
+    });
+});
+
+
+// $(document).ready(function() {
+
+//     $('#trigerratingbutton').click(function(){       
+    
+//     $( "#triggeredbutton" ).trigger( "click" );   
+
+//     });
+// });
+  
 
     

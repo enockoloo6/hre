@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="title-action">
-                        <a href="" class="btn btn-primary">This is action area</a>
+                        <a href="<?= base_url();?>index.php/housesearch" class="btn btn-primary">Home</a>
                     </div>
                 </div>
             </div>

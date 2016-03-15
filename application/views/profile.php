@@ -25,6 +25,7 @@
     <div class="row m-t-lg">
 
         <div class="col-lg-2">
+
                 <div>                    
                     <table class="table">
                         <tbody>

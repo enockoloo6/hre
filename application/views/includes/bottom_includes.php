@@ -112,9 +112,9 @@
                     closeButton: true,
                     progressBar: true,
                     showMethod: 'slideDown',
-                    timeOut: 4000
+                    timeOut: 2000
                 };
-                toastr.success('Housing recomendation engine', 'Welcome to HRE');
+                toastr.success('Housing recomendation engine', 'HRE');
 
             }, 1300);
         });
