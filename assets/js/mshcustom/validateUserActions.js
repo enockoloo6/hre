@@ -22,6 +22,11 @@ $(document).ready(function(){
     });
 });
 
+
+function More_options_addition_to_house_search(){
+
+    document.getElementById("more_information").removeAttribute("class");
+}
 /* *****************validate the phone no********************** */
 $(document).ready(function() {
     $('#txtPhone').blur(function(e) {
@@ -223,15 +228,61 @@ function removerating(){
     });
 });
 
+//this validates the inputs for the forms
+$(document).ready(function(){
 
-// $(document).ready(function() {
+    $("#form").validate({
+        rules: {
+            password: {
+                required: true,
+                minlength: 3
+            },
+            url: {
+                required: true,
+                url: true
+            },
+            number: {
+                required: true,
+                number: true
+            },
+            min: {
+                required: true,
+                minlength: 6
+            },
+            max: {
+                required: true,
+                maxlength: 4
+            },
 
-//     $('#trigerratingbutton').click(function(){       
-    
-//     $( "#triggeredbutton" ).trigger( "click" );   
+            price_range: {
+                required: true,
+                number: true,
+                minlength: 3
+            },
 
-//     });
-// });
-  
+            email: {
+                required: true,
+                email: true,                
+                minlength: 3
+            },
 
+            password: {
+                required: true,                               
+                minlength: 4
+            },
+
+            phone_number: {
+                required: true, 
+                number: true,                              
+                minlength: 8
+
+            },
+
+            f_name: {
+                required: true,
+                minlength: 2
+            }
+        }
+    });
+});
     

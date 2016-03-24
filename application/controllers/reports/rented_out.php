@@ -1,6 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Google_map extends MY_Controller {
+class rented_out extends MY_Controller {
+
 
 	private $data;
 	protected $before_filter = array(
@@ -8,10 +9,11 @@ class Google_map extends MY_Controller {
 		'except' => array()
 	);
 
+
 	public function index()
 	{
-	
-		$this->load->view('google_map');
+
+		$this->load->view('rented_houses_report');
 
 	}
 } 

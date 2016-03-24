@@ -40,7 +40,9 @@ class Login extends CI_Controller
         $password = $this->__encrip_password($this->input->post('password'));
         $is_valid = $this->user_model->validate($email, $password);
 
-        if ($is_valid) {
+        $role = $is_valid[0]['role'];
+
+        if ($role == 1 && $is_valid) {
             $role = $is_valid[0]['role'];
             $user_id = $is_valid[0]['user_id'];
             $f_name = $is_valid[0]['f_name'];
@@ -57,20 +59,54 @@ class Login extends CI_Controller
 
             );
             $this->session->set_userdata($data);
-
-
             redirect(base_url().'index.php/profile');
-            
+        }
 
+        else if ($role == 0 && $is_valid) {
+            $role = $is_valid[0]['role'];
+            $user_id = $is_valid[0]['user_id'];
+            $f_name = $is_valid[0]['f_name'];
+            $photo = $is_valid[0]['photo'];
+            //print_r($is_valid);
+            $data = array(
+                'email' => $email,
+                'user_id' => $user_id,
+                'is_logged_in' => true,
+                'role' => $role,
+                'f_name' => $f_name,
+                'photo' => $photo,
+                'other_names'=>$other_names
 
-        } else // incorrect username or password
+            );
+            $this->session->set_userdata($data);
+            redirect(base_url().'index.php/housesearch');
+        }
+        else if ($role == -1 && $is_valid) {
+            $role = $is_valid[0]['role'];
+            $user_id = $is_valid[0]['user_id'];
+            $f_name = $is_valid[0]['f_name'];
+            $photo = $is_valid[0]['photo'];
+            //print_r($is_valid);
+            $data = array(
+                'email' => $email,
+                'user_id' => $user_id,
+                'is_logged_in' => true,
+                'role' => $role,
+                'f_name' => $f_name,
+                'photo' => $photo,
+                'other_names'=>$other_names
+            );
+            $this->session->set_userdata($data);
+            redirect(base_url().'index.php/users');
+        }
+
+        else // incorrect username or password
         {
             redirect(base_url());
             //$data['error_message'] = TRUE;
             //$this->load->view('login', $data);
         }
     }
-
 
 
     function logout()

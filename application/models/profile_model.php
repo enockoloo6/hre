@@ -7,6 +7,15 @@ class Profile_model extends CI_Model{
 	$query_result = $query->result();
 	return $query_result;
 	}
+
+	function show_posted_houses(){
+		$this->db->select('*');
+		$this->db->from('house_details');
+		$this->db->where('owner', $this->session->userdata('user_id'));
+		$query = $this->db->get();
+		$query_result = $query->result();
+		return $query_result;
+	}
 	// Function To Fetch Selected House Record
 	function show_particular_house($dataf){
 	$this->db->select('*');
@@ -109,6 +118,7 @@ class Profile_model extends CI_Model{
         return $result;
     }
 
+	/*---------------------------------------------------------------------------------------------------*/
 	/*---------------------------------------------------------------------------------------------------*/
 
 } 

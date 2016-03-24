@@ -41,7 +41,7 @@ class User_model extends CI_Model
         } else {
 
             $new_user_insert_data = array(
-                'f_name' => $f_name,                
+                'f_name' => $f_name,
                 'other_names' => $other_names,
                 'phone_number' => $phone_number,
                 'national_id' => $national_id,
@@ -74,10 +74,10 @@ class User_model extends CI_Model
             $new_user_insert_data = array(
                 'phone_number' => $phone_number,
                 'email' => $email,
-                'fname' => $f_name,
+                'f_name' => $f_name,
                 'other_names' => $other_names,
                 'national_id'=>$national_id,
-                'password'=>$password
+                'password'=>md5($password)
             );
 
         }
@@ -103,22 +103,22 @@ class User_model extends CI_Model
 
 // this is to be used during the sign up to initialize the photo
     function get_profile_image_for_the_logged_in_user($user_identification){
-            
+
     //$user_identification = $this->session->userdata('user_id');
             $image = array(
-            'Image_id' => NULL,       
+            'Image_id' => NULL,
             'user_id' => $user_identification,
             );
 
             $this->db->select('image_name');
             $this->db->from('images');
-            $this->db->where($image); 
+            $this->db->where($image);
             $query = $this->db->get();
             $result = $query->row()->image_name;
             return $result;
 
     $this->session->set_userdata(array('image_name' => $result));
-    
+
     }
     //end of the photo
 
@@ -128,18 +128,18 @@ class User_model extends CI_Model
             $user_identification = $this->session->userdata('user_id');
 
             $image = array(
-            'Image_id' => NULL,       
+            'Image_id' => NULL,
             'user_id' => $user_identification,
             );
         //use the user id to update not all the data
-        $this->db->where($image);    
+        $this->db->where($image);
         $this->db->from('images');
 
-        $query = $this->db->get();      
+        $query = $this->db->get();
             if ($query->num_rows() > 0){
 
                 $this->db->where($image);
-                $this->db->update('images', $img);           
+                $this->db->update('images', $img);
             }
             else if($query->num_rows() == 0){
             $insert = $this->db->insert('images', $img);
@@ -147,6 +147,103 @@ class User_model extends CI_Model
             return $insert;
             }
         }
+    /**********Interest*************extra iformation entered by the user once they are logged  in*****************************************/
+
+    function add_interests_for_a_user($data){
+
+        $user_id = $this->session->userdata('user_id');
+
+        $this->db->where($data);
+        $this->db->from('interests');
+        $query = $this->db->get();
+
+        if ($query->num_rows() == 0){//if there us no such interest in the interest table
+
+            $insert = $this->db->insert('interests', $data);
+            if($insert){
+                $this->db->select('interest_id');
+                $this->db->from('interests');
+                $this->db->where($data);
+                $iquery = $this->db->get();
+                $interest_id=$iquery->row()->interest_id;
+                //now insert the resultant interest id and the user id into the user interest table
+
+                    $userinterests = array(
+                        'interest_id' => $interest_id,
+                        'user_id' => $user_id,
+                    );
+                    $this->db->insert('user_interest', $userinterests);
+                    return $this->db->insert_id();
+
+            }
+        }
+        else if($query->num_rows() > 0)
+            $this->db->select('interest_id');
+            $this->db->from('interests');
+            $this->db->where($data);
+            $iquery = $this->db->get();
+            $interest_id=$iquery->row()->interest_id;
+
+                    $userinterests = array(
+                        'interest_id' => $interest_id,
+                        'user_id' => $user_id,
+                    );
+                    $this->db->insert('user_interest', $userinterests);
+                    return $this->db->insert_id();
+    }
+
+    /***********Occupation************extra iformation entered by the user once they are logged  in*****************************************/
+
+    function add_occupations_for_a_user($data){
+
+        $user_id = $this->session->userdata('user_id');
+
+        $this->db->where($data);
+        $this->db->from('occupations');
+        $query = $this->db->get();
+
+        if ($query->num_rows() == 0){//if there us no such interest in the interest table
+
+            $insert = $this->db->insert('occupations', $data);
+            if($insert){
+                $this->db->select('occupation_id');
+                $this->db->from('occupations');
+                $this->db->where($data);
+                $iquery = $this->db->get();
+                $occupation_id=$iquery->row()->occupation_id;
+                //now insert the resultant occupation id and the user id into the user interest table
+
+                $useroccupations = array(
+                    'occupation_id' => $occupation_id,
+                    'user_id' => $user_id,
+                );
+                $this->db->insert('user_occupation', $useroccupations);
+                return $this->db->insert_id();
+
+            }
+        }
+        else if($query->num_rows() > 0)
+            $this->db->select('occupation_id');
+        $this->db->from('occupations');
+        $this->db->where($data);
+        $iquery = $this->db->get();
+        $occupation_id=$iquery->row()->occupation_id;
+
+        $useroccupations = array(
+            'occupation_id' => $occupation_id,
+            'user_id' => $user_id,
+        );
+        $this->db->insert('user_occupation', $useroccupations);
+        return $this->db->insert_id();
+    }
+
+
+    function add_age_and_gender($data){
+        $user_id = $this->session->userdata('user_id');
+        $this->db->where('user_id', $user_id);
+        $updated = $this->db->update('users', $data);
+        return $updated;
+    }
 
 }
 

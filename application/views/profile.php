@@ -13,7 +13,20 @@
                 </li>
             </ol>
     </div>
-<div class="col-sm-8"> 
+
+    <div class="col-sm-4">
+    <?php $success_post = $this->session->flashdata('datasuccess');
+
+    if($success_post){
+        ?>
+                <div class="alert alert-success">
+                    <?php echo($success_post); ?>
+                </div>
+    <?php } ?>
+    </div>
+
+
+<div class="col-sm-4">
 <div class="title-action">
     <a href="#" class="btn btn-primary">Post new or update existing houses</a>
 </div>
@@ -24,24 +37,20 @@
 
     <div class="row m-t-lg">
 
-        <div class="col-lg-2">
+        <div class="col-lg-3">
 
                 <div>                    
                     <table class="table">
                         <tbody>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-default m-r-sm">12</button>
-                                Total messages
+                                <button type="button" class="btn btn-default m-r-sm">0</button> 
+                                <b style="color: #b3b3b3">Total messages</b>
+
                             </td>
                             <td>
                         </tr>
 
-                        </tbody>
-                    </table>
-
-                    <table class="table">
-                        <tbody>
                         <tr>
                             <td>
                                 <button type="button" class="btn btn-primary m-r-sm"> 
@@ -53,17 +62,19 @@
                                 endforeach; echo $count;?>
 
                                 </button>
-                               Houses Posted
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-info m-r-sm">15</button>
-                               Comments
+                               <b style="color: #b3b3b3">Houses Posted</b>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-warning m-r-sm">30</button>
-                                Notifications
+                                <button type="button" class="btn btn-info m-r-sm">0</button>
+                               <b style="color: #b3b3b3">Comments</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-warning m-r-sm">0</button>
+                                <b style="color: #b3b3b3">All Notifications</b>
                             </td>
                         </tr>
 
@@ -72,9 +83,74 @@
                 
             </div>
 
+
+
+
+
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5><div style="color: red"> More information is required</div></h5>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <div class="sk-spinner sk-spinner-double-bounce">
+                            <div class="sk-double-bounce1"> <a More_options_addition_to_house_search()> <i class="fa fa-arrow-down"> click left</i></a> </div>
+                            <div class="sk-double-bounce2"> <a More_options_addition_to_house_search()> <i class="fa fa-arrow-down"></i></a> </div>
+                        </div>
+                        <b style="color: #b3b3b3"><a onClick="More_options_addition_to_house_search()">click here to add</a></b>
+                    </div>
+
+                    <!-- extra information-->
+                    <div id="more_information" class="hide" >
+                        <div class="ibox-content">
+                            <div class="ibox-heading"><span class="star_class star_class" style="color: darkred"><strong>These information required to aid in recommendation*</strong></span></div><br>
+                            <div class="row">
+                                <div class="m-t-none m-b">
+                                    <form action="<?= base_url();?>index.php/register/post_extra_user_details" id="form" method="post" enctype="multipart/form-data" autocomplete="on">
+                                        <div class="form-group"><label>Occupation</label> <input type="text" name="occupation" placeholder="eg teacher, farmer,banker etc" class="form-control"></div>
+                                        <div class="form-group"><label>Interest</label> <input type="text" name="interest" placeholder="eg swimming, football etc" class="form-control"></div>
+                                        <div class="hide"><input type="text" value="<?php echo( $this->uri->segment(1));?>" name="theuri"></div>
+                                        <div class="form-group"><label>Gender</label>
+                                            <select name="gender" class="form-control">
+                                                <option>Male</option>
+                                                <option>Female</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group"><label>Age group</label>
+
+                                            <select name="age_group" class="form-control">
+                                                <option>--SELECT--</option>
+                                                <option>below 20</option>
+                                                <option>20-25</option>
+                                                <option>25-30</option>
+
+                                                <option>30-35</option>
+                                                <option>35-40</option>
+                                                <option>40-45</option>
+                                                <option>45-50</option>
+                                                <option>50-55</option>
+                                                <option>55+</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Submit</strong></button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- extra information-->
+                </div>
+
+
+
             </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="row">
                        
                             <div class="ibox-content text-center">
@@ -224,21 +300,24 @@
                             <img alt="image" class="img-circle" src="<?php echo(base_url().$posted_houses->photo1)?>">
                         </a>
                         <div class="media-body ">
-                            <small class="pull-right text-navy">1m ago</small>
-                            <strong><?php echo $posted_houses->type; ?></strong> <?php echo "  house ".$posted_houses->house_id; ?>
+                            <small class="pull-right text-navy"><?php echo $posted_houses->house_post_date ?>d</small>
+
+                            Name: <strong><?php if($posted_houses->house_name=="")echo "  No house name"; else  {echo "  house ".$posted_houses->house_id;} ?></strong><br>
+
+                            Type of house: <strong><?php echo " ".$posted_houses->type; ?></strong>
                             <p class="m-b-xs">
 
-                                <?php echo $posted_houses->location; ?>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+
+                                House location is in <strong><?php echo " ".$posted_houses->location; ?></strong>
                             </p>
-                            <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+                            <small class="text-muted"><?php echo $posted_houses->house_post_date ?></small>
 
                                 <div class="text-right">
                                    
                                     <a class="btn btn-xs btn-default" data-toggle="modal" data-target="#hlModal_<?php echo $posted_houses->house_id?>"><i class="fa fa-edit"></i> Edit </a>         
                                     <a href="<?php echo(base_url()."index.php/profile/delete_house_details/".$posted_houses->house_id); ?>"><div class="btn btn-xs btn-warning"><i class="fa fa-trash"></i></div></a> 
 
-                                <!--modal form for new houses -->
+                                <!--modal form for editing houses -->
                                         <div class="modal inmodal" id="hlModal_<?php echo $posted_houses->house_id?>" tabindex="-1" role="dialog" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content animated bounceInRight">
@@ -249,7 +328,7 @@
                                                         <small class="font-bold">Edit the details of house no <?php echo $posted_houses->house_id; ?> here and update them.</small>
                                                     </div>
 
-                                                    <form action="<?= base_url();?>index.php/profile/update_house_details" method="post" enctype="multipart/form-data" autocomplete="on">
+                                                    <form action="<?= base_url();?>index.php/profile/update_house_details" id="form" method="post" enctype="multipart/form-data" autocomplete="on">
                                                     <div class="modal-body">
                                                             
                                                             <div class="form-group hide"><label>House id</label> <input type="text" name="house_id" placeholder="Location choice" class="form-control" value="<?php echo $posted_houses->house_id; ?>"></div>
@@ -259,14 +338,16 @@
                                                                 <select name="house_location" class="form-control">                                                                 
                                                                  <option <?php if($posted_houses->location == 'Langata'){echo"selected";}?>>Langata</option>
                                                                  <option <?php if($posted_houses->location == 'Ngong'){echo"selected";}?>>Ngong</option>
-                                                                 <option <?php if($posted_houses->location == 'Rongai'){echo"selected";}?>>Rongai</option>                                                               
-                                                                 <option <?php if($posted_houses->location == 'Dagoretti'){echo"selected";}?>>Dagoretti</option>                                                               
-                                                                 <option <?php if($posted_houses->location == 'Adams'){echo"selected";}?>>Adams</option>                                                               
-                                                                 <option <?php if($posted_houses->location == 'Kileleshwa'){echo"selected";}?>>Kileleshwa</option>                                                               
-                                                                 <option <?php if($posted_houses->location == 'Kibera'){echo"selected";}?>>Kibera</option>                                                               
-                                                                 <option <?php if($posted_houses->location == 'Buruburu'){echo"selected";}?>>Buruburu</option>                                                               
-                                                                 <option <?php if($posted_houses->location == 'Baba dogo'){echo"selected";}?>>Baba dogo</option>                                                               
-                                                                </select>    
+                                                                 <option <?php if($posted_houses->location == 'Rongai'){echo"selected";}?>>Rongai</option>
+                                                                 <option <?php if($posted_houses->location == 'Dagoretti'){echo"selected";}?>>Dagoretti</option>
+                                                                 <option <?php if($posted_houses->location == 'Adams'){echo"selected";}?>>Adams</option>
+                                                                 <option <?php if($posted_houses->location == 'Kileleshwa'){echo"selected";}?>>Kileleshwa</option>
+                                                                 <option <?php if($posted_houses->location == 'Kibera'){echo"selected";}?>>Kibera</option>
+                                                                 <option <?php if($posted_houses->location == 'Buruburu'){echo"selected";}?>>Buruburu</option>
+                                                                <option <?php if($posted_houses->location == 'Baba dogo'){echo"selected";}?>>Baba dogo</option>
+                                                                <option <?php if($posted_houses->location == 'makadara'){echo"selected";}``?>>Makadara</option>
+                                                                <option <?php if($posted_houses->location == 'ruaraka'){echo"selected";}?>>Ruaraka</option>
+                                                                </select>
 
                                                             <label>Type of house</label>
                                                                 <select name="house_type" class="form-control">                                                                 
@@ -279,22 +360,12 @@
                                                                  <option <?php if($posted_houses->type == 'Three bedroom+'){echo"selected";}?>>Three bedroom+</option>
                                                                 </select>
 
-                                                            <!-- <div class="form-group"><label>Type of house</label> <input type="text" name="house_type" placeholder="house type" class="form-control" value="<?php //echo $posted_houses->type; ?>"></div> -->
+                                                            <div class="form-group"><label>Other descriptions</label> <input type="text" name="house_description" placeholder="house_description" class="form-control" value="<?php echo $posted_houses->house_description; ?>"></div>
 
-                                                            <div class="form-group"><label>Photo1</label> <input type="file" name="userfile[]" placeholder="captured image of the house" class="form-control" value="<?php echo $posted_houses->photo1; ?>"></div>
+                                                        <div class="form-group"><label>House Image</label> <input type="file" name="userfile[]" placeholder="captured image of the house" class="form-control" value="<?php echo $posted_houses->photo1; ?>"></div>
+                                                        <div class="form-group"><label>Price</label> <input type="text" name="price_range" placeholder="captured image of the house" class="form-control" value="<?php echo $posted_houses->price; ?>"></div>
 
-                                                            <div class="form-group"><label>Recreational facility</label> <input type="text" name="rfacility" placeholder="Any recreational facility you wish to find within or around" class="form-control" value="<?php echo $posted_houses->rfacility; ?>"></div>
 
-                                                            <div class="form-group"><label>main road</label> <input type="text" name="road" placeholder="street/avenue along which you wish to find a home" class="form-control" value="<?php echo $posted_houses->road; ?>"></div>
-
-                                                            
-                                                            <label>Price range.</label>
-                                                                <select name="price_range" class="form-control">                                                                 
-                                                                 <option name="price_range"<?php if($posted_houses->price == '1000-3000'){echo"selected";}?>>1000-3000</option>
-                                                                 <option name="price_range"<?php if($posted_houses->price == '3001-5000'){echo"selected";}?>>3001-5000</option>
-                                                                 <option name="price_range"<?php if($posted_houses->price == '5001-10000'){echo"selected";}?>>51-10000</option>
-                                                                 <option name="price_range"<?php if($posted_houses->price == '10001+'){echo"selected";}?>>10001+</option>
-                                                                </select>
                                                             
                                                     </div>
                                                     <div class="modal-footer">
@@ -335,26 +406,82 @@
                                             <small class="font-bold">You can add the details of your new house and post them here.</small>
                                         </div>
 
-                                        <form action="<?= base_url();?>index.php/profile/post_new_house" method="post" enctype="multipart/form-data">
+                                        <form action="<?= base_url();?>index.php/profile/post_new_house" id="form" method="post" enctype="multipart/form-data">
                                         <div class="modal-body"> 
 
-                                                <div class="form-group"><label>House name</label> <input type="file" name="house_tittle" placeholder="captured image of the house" class="form-control"></div>
+                                            <div class="form-group"><label>House name</label> <input type="text" name="house_tittle" placeholder="house name" class="form-control"></div>
 
-                                                <label>Location</label>
-                                                    <select name="house_location" class="form-control">                                                                 
-                                                     <option>Langata</option>
-                                                     <option>Ngong</option>
-                                                     <option>Rongai</option>                                                               
-                                                     <option>Dagoretti</option>                                                               
-                                                     <option>Adams</option>                                                               
-                                                     <option>Kileleshwa</option>                                                               
-                                                     <option>Kibera</option>                                                               
-                                                     <option>Buruburu</option>                                                               
-                                                     <option>Baba dogo</option>                                                               
-                                                    </select>    
+                                            <div class="form-group">
+                                            <label>County</label>
+                                            <select name="county" id="json-one"id="country" size="1" class="form-control"
+                                                    title="Name of Your County" admin="1" frontend="1">
+                                                <option selected value="48">--SELECT--</option>
+                                                <option value="1">Baringo County</option>
+                                                <option value="2">Bomet County</option>
+                                                <option value="3">Bungoma County</option>
+                                                <option value="4">Busia County</option>
+                                                <option value="5">Elgeyo Marakwet County</option>
+                                                <option value="6">Embu County</option>
+                                                <option value="7">Garissa County</option>
+                                                <option value="8">Homa Bay County</option>
+                                                <option value="9">Isiolo County</option>
+                                                <option value="10">Kajiado County</option>
+                                                <option value="11">Kakamega County</option>
+                                                <option value="12">Kericho County</option>
+                                                <option value="13">Kiambu County</option>
+                                                <option value="14">Kilifi County</option>
+                                                <option value="15">Kirinyaga County</option>
+                                                <option value="16">Kisii County</option>
+                                                <option value="17">Kisumu County</option>
+                                                <option value="18">Kitui County</option>
+                                                <option value="19">Kwale County</option>
+                                                <option value="20">Laikipia County</option>
+                                                <option value="21">Lamu County</option>
+                                                <option value="22">Machakos County</option>
+                                                <option value="23">Makueni County</option>
+                                                <option value="24">Mandera County</option>
+                                                <option value="25">Meru County</option>
+                                                <option value="26">Migori County</option>
+                                                <option value="27">Marsabit County</option>
+                                                <option value="28">Mombasa County</option>
+                                                <option value="29">Muranga County</option>
+                                                <option value="30">Nairobi County</option>
+                                                <option value="31">Nakuru County</option>
+                                                <option value="32">Nandi County</option>
+                                                <option value="33">Narok County</option>
+                                                <option value="34">Nyamira County</option>
+                                                <option value="35">Nyandarua County</option>
+                                                <option value="36">Nyeri County</option>
+                                                <option value="37">Samburu County</option>
+                                                <option value="38">Siaya County</option>
+                                                <option value="39">Taita Taveta County</option>
+                                                <option value="40">Tana River County</option>
+                                                <option value="41">Tharaka Nithi County</option>
+                                                <option value="42">Trans Nzoia County</option>
+                                                <option value="43">Turkana County</option>
+                                                <option value="44">Uasin Gishu County</option>
+                                                <option value="45">Vihiga County</option>
+                                                <option value="46">Wajir County</option>
+                                                <option value="47">West Pokot County</option>
 
+                                            </select>
+                                            </div>
+
+                                            <label>Location in the selected county</label>:<span class="star_class star_class" style="">*</span>&nbsp;                              <div class="form-field-container">
+                                            <div class="form-field">
+                                                  <span class="ui-widget">
+                                                            <select name="house_location" id="json-two" class="form-control"
+                                                                    title="Location" admin="1" frontend="1">
+                                                                <option>Please choose from above</option>
+                                                            </select>
+                                                  </span><br/>
+                                                <span class="input-errors" id="state_err"></span>
+                                            </div>
+                                            <div class="form-field-info"></div>
+
+                                            <div class="form-group">
                                                 <label>Type of house</label>
-                                                    <select name="house_type" class="form-control">                                                                 
+                                                <select name="house_type" class="form-control">
                                                      <option>Single room</option>
                                                      <option>Double room</option>
                                                      <option>Servant quarter</option>
@@ -362,23 +489,12 @@
                                                      <option>One bedroom</option>
                                                      <option>Two bedroom</option>
                                                      <option>Three bedroom+</option>
-                                                    </select>
+                                                </select>
+                                            </div>
                                                 
-                                                <div class="form-group"><label>House image</label> <input type="file" name="userfile[]" placeholder="captured image of the house" class="form-control"></div>
-
-                                                <div class="form-group hide"><label>Photo2</label> <input type="file" name="userfile[]" placeholder="captured image of the house" class="form-control"></div>
-
-                                                <div class="form-group hide"><label>Recreational facility</label> <input type="text" name="rfacility" placeholder="Any recreational facility you wish to find within or around" class="form-control"></div>
-
-                                                <div class="form-group"><label>main road</label> <input type="text" name="road" placeholder="street/avenue along which you wish to find a home" class="form-control"></div>
-
-                                                <label>Price range.</label>
-                                                    <select name="price_range" class="form-control">                                                                 
-                                                     <option>1000-3000</option>
-                                                     <option>3001-5000</option>
-                                                     <option>5001-10000</option>
-                                                     <option>10001+</option>
-                                                    </select>
+                                            <div class="form-group"><label>House image</label> <input type="file" name="userfile[]" placeholder="captured image of the house" class="form-control"></div>
+                                            <div class="form-group"><label>Other descriptions</label> <input type="text" name="house_description" placeholder="enter the house price" class="form-control"></div>
+                                            <div class="form-group"><label>Price</label> <input type="text" name="price_range" placeholder="enter the house price" class="form-control"></div>
 
                                         </div>
                                         <div class="modal-footer">
@@ -403,5 +519,6 @@
         </div>
 
 </div>
+
 
 <?php require_once("includes/footer.php"); 

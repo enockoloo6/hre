@@ -44,21 +44,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand"  <?php if(! $this->session->userdata('user_id')){?> data-toggle="modal" <?php } ?> data-target="#hploginModal" href="<?php if( $this->session->userdata('user_id')) echo (base_url().'index.php/profile');?>">Post a new house</a>
+
+                    <a class="navbar-brand" <?php if ($this->session->userdata('user_id') && $this->session->userdata('role') == 0){ echo ("onClick ='Loginerror()'");} ?>   <?php if(! $this->session->userdata('user_id')){?> data-toggle="modal" <?php } ?> data-target="#hploginModal" href="<?php if( $this->session->userdata('role') == 1 ) echo (base_url().'index.php/profile'); else if( $this->session->userdata('role') == -1 ) echo (base_url().'index.php/users'); ?>">Post a new house</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="page-scroll" href="#page-top">Home</a></li>
-                        <li><a href="<?php echo(base_url()); ?>index.php/home">Dashboard</a></li>
+<!--                        <li><a href="--><?php //echo(base_url()); ?><!--index.php/home">Dashboard</a></li>-->
                         <li><a class="page-scroll" href="#features">About</a></li>
                         <li><a class="page-scroll" href="#team">Team</a></li>
                         <li><a class="page-scroll" href="#testimonials">Testimonials</a></li>
                         <!-- <li><a class="page-scroll" href="#pricing">Pricing</a></li> -->
                         <li><a class="page-scroll" href="#contact">Contact</a></li>
-                        <!-- <li><a href="<?php //echo(base_url()); ?>index.php/login">Login</a></li> -->
-<!--                         <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#phloginModal">
-                                Search for a house
-                        </button></li> -->
 
                         <!-- house post login modal -->
                             <div id="hploginModal" class="modal fade" aria-hidden="true">
@@ -73,7 +70,7 @@
                                             <div class="row">
                                                 <div class="col-sm-7 b-r"><h3 class="m-t-none m-b">Sign in</h3>                                                    
 
-                                                    <form action="<?= base_url();?>index.php/login/validate" method="post" enctype="multipart/form-data">
+                                                    <form action="<?= base_url();?>index.php/login/validate" id="form" method="post" enctype="multipart/form-data">
                                                         <div class="form-group"><label>Email</label> <input type="email" autofill="on" name="email" placeholder="Email" class="form-control"></div>
                                                         <div class="form-group"><label>Password</label> <input type="password" name="password" placeholder="Password" class="form-control"></div>
                                                         <div>
@@ -102,22 +99,23 @@
                                     <div class="modal-content animated flip">
                                             <div class="modal-header text-center">
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                            <i class="fa fa-institution modal-icon" id="hrebig-icon"></i>                                           
+                                            <i class="fa fa-institution modal-icon" id="hrebig-icon"></i>
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-sm-7 b-r"><h3 class="m-t-none m-b">Sign in</h3>
 
-                                                    
 
-                                                    <form action="<?= base_url();?>index.php/post_new_house" method="post" enctype="multipart/form-data">
-                                                        <div class="form-group"><label>Email</label> <input type="email" name="email" placeholder="Enter email" class="form-control"></div>
+
+                                                    <form action="<?= base_url();?>index.php/login/validate" id="form" method="post" enctype="multipart/form-data">
+                                                        <div class="form-group"><label>Email</label> <input type="email" autofill="on" name="email" placeholder="Email" class="form-control"></div>
                                                         <div class="form-group"><label>Password</label> <input type="password" name="password" placeholder="Password" class="form-control"></div>
                                                         <div>
                                                             <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Log in</strong></button>
                                                             <label> <input type="checkbox" class="i-checks"> Remember me </label>
                                                         </div>
                                                     </form>
+
                                                 </div>
                                                 <div class="col-sm-5"><h4>Not a member?</h4>
                                                     <p>You can create an account:</p>
@@ -143,19 +141,19 @@
                                             <h4 class="modal-title">Sign up details</h4>
                                         </div>
 
-                                        <form action="<?= base_url();?>index.php/post_new_house" method="post" enctype="multipart/form-data">
+                                        <form action="<?= base_url();?>index.php/register/create_user" id="form" method="post" enctype="multipart/form-data">
                                         <div class="modal-body">
-                                                <div class="form-group"><label>First name</label> <input type="text" name="" placeholder="Enter your email" class="form-control"></div>
-                                                <div class="form-group"><label>Other name</label> <input type="text" name="" placeholder="Enter your email" class="form-control"></div>
-                                                <div class="form-group"><label>Phone number</label> <input type="email" name="" placeholder="Enter your email" class="form-control"></div>
-                                                <div class="form-group"><label>Email</label> <input type="email" name="" placeholder="Enter your email" class="form-control"></div>
-                                                <div class="form-group"><label>Password</label> <input type="password" name="" placeholder="Enter your email" class="form-control"></div>
-                                                <div class="form-group"><label>Confirm password</label> <input type="password" name="" placeholder="Enter your email" class="form-control"></div>
+                                                <div class="form-group"><label>First name</label> <input type="text" name="f_name" placeholder="First name" class="form-control"></div>
+                                                <div class="form-group"><label>Other name</label> <input type="text" name="other_names" placeholder="Enter other names" class="form-control"></div>
+                                                <div class="form-group"><label>Phone number</label> <input type="tel" name="phone_number" placeholder="Enter your email" class="form-control"></div>
+                                                <div class="form-group"><label>Email</label> <input type="email" name="email" placeholder="Enter your email" class="form-control"></div>
+                                                <div class="form-group"><label>Password</label> <input type="password" name="password" placeholder="Enter your email" class="form-control"></div>
+                                                <div class="form-group"><label>Confirm password</label> <input type="password" name="password" placeholder="Enter your email" class="form-control"></div>
                                                 <div class="form-group hide"><input name="role" type="tel" class="form-control" value"0"></div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                         </form>
                                     </div>
@@ -178,7 +176,7 @@
 
                                         <form action="<?= base_url();?>index.php/register/create_user" method="post" enctype="multipart/form-data">
                                            <div class="modal-body">
-                                                    <form autocomplete="off" style="color: black;" class="m-t" method="post" role="form" action="<?php echo(base_url()); ?>index.php/register/create_user">
+                                                    <form autocomplete="off" style="color: black;" class="m-t" id="form" method="post" role="form" action="<?php echo(base_url()); ?>index.php/register/create_user">
                                                         <div class="form-group"><label>First name</label>
                                                             <input name="f_name" type="text" class="form-control" placeholder="First name" required="">
                                                         </div>
@@ -221,8 +219,10 @@
 
                             <!-- end of the modal form -->
 
-                    <a class="navbar-brand" data-toggle="modal" data-target="#hsloginModal" href="#">Search for a house</a>
-               
+<!--                        <a class="navbar-brand" data-toggle="modal" data-target="#hsloginModal" href="#">Search for a house</a>-->
+                        <a class="navbar-brand"  <?php if(! $this->session->userdata('user_id')){?> data-toggle="modal" <?php } ?> data-target="#hsloginModal" href="<?php if( $this->session->userdata('user_id')) echo (base_url().'index.php/housesearch');?>">Search for a house</a>
+
+
                     </ul>
                 </div>
             </div>
@@ -241,7 +241,7 @@
                         Find, Post,<br/>
                         and Rent Houses<br/>
                         we are HRE team</h1>
-                    <p>Sign up and enjoy our services today.</p>
+                    <p>Sign up!. </p>
                 </div>
                 <div class="carousel-image wow zoomIn">
 
@@ -692,7 +692,10 @@
     </div>
 </section>
 
+<script src="<?php echo(base_url()); ?>assets/js/mshcustom/landing_page.js"></script>
 <script src="<?php echo(base_url()); ?>assets/Landing_page/js/jquery-2.1.1.js"></script>
+<script src="<?php echo(base_url()); ?>assets/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="<?php echo(base_url()); ?>assets/js/mshcustom/validateUserActions.js"></script>
 <script src="<?php echo(base_url()); ?>assets/Landing_page/js/pace.min.js"></script>
 <script src="<?php echo(base_url()); ?>assets/Landing_page/js/bootstrap.min.js"></script>
 <script src="<?php echo(base_url()); ?>assets/Landing_page/js/classie.js"></script>

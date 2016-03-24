@@ -1,7 +1,7 @@
 
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Users extends CI_Controller
+class Users extends MY_Controller
 {
     /**
      * Index Page for this controller.
@@ -18,6 +18,12 @@ class Users extends CI_Controller
      * map to /index.php/welcome/<method_name>
      * @see http://codeigniter.com/user_guide/general/urls.html
      */
+    private $data;
+    protected $before_filter = array(
+        'action' => '_check_if_logged_in',
+        'except' => array()
+    );
+
     function __construct()
     {
         parent::__construct();

@@ -13,11 +13,10 @@ require_once("top_includes.php");
                     <div class="dropdown profile-element"> <span>
 
                             <img alt="image" class="img-circle" src="<?php echo(base_url().$this->session->userdata('photo')); ?>" />
-                            <!-- <img alt="image" class="img-circle" src="<?php //echo(base_url()); ?>assets/img/a1.jpg" /> -->
 
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> 
+                            <span class="clear">
                             <span class="text-muted text-xs block">Logged in as: </span>
                             <span class="block m-t-xs"> <strong class="font-bold"><?php echo($this->session->userdata('f_name')); ?></strong></span>
                             </span> </a>
@@ -38,7 +37,10 @@ require_once("top_includes.php");
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li><a style="font-size:15px" href="<?php echo(base_url()); ?>index.php/reports/users">Users</a></li>
-                                       
+                    <li><a style="font-size:15px" href="<?php echo(base_url()); ?>index.php/reports/combined_report">Comparisons</a></li>
+                    <li><a style="font-size:15px" href="<?php echo(base_url()); ?>index.php/reports/house_availability">House availability</a></li>
+                    <li><a style="font-size:15px" href="<?php echo(base_url()); ?>index.php/reports/rented_out">Rented out houses</a></li>
+
                 </ul>
             </li>
 
@@ -47,13 +49,18 @@ require_once("top_includes.php");
                         class="fa arrow"></span></a>
                  <ul class="nav nav-second-level">
 
+                    <?php if($this->session->userdata('role') == 1 || $this->session->userdata('role') == -1 ){ ?>
                     <li><a style="font-size:15px"href="<?php echo(base_url()); ?>index.php/profile">Profile</a></li>
+                     <?php } ?>
+
                     <li><a style="font-size:15px"href="<?php echo(base_url()); ?>index.php/housesearch">Search for a house</a></li>
                     <li><a style="font-size:15px"href="<?php echo(base_url()); ?>index.php/housesearch/show_recommendations">recommendations</a></li>
 
-                    <li><a style="font-size:15px"href="<?php echo(base_url()); ?>index.php/users">Users</a></li>
-                   
-                           
+                     <?php if($this->session->userdata('role') == -1 ){ ?>
+                     <li><a style="font-size:15px"href="<?php echo(base_url()); ?>index.php/users">Users</a></li>
+                     <?php } ?>
+
+
                   </ul>
             </li>
 
@@ -74,7 +81,7 @@ require_once("top_includes.php");
                     <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
                 </div>
             </form>
-            
+
             </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
@@ -84,9 +91,9 @@ require_once("top_includes.php");
 <!-- notificaiton -->
 
                 <?php if($this->session->userdata('role')== -1 && $this->uri->segment(1)=='profile') { ?>
-                                            
-                <?php foreach ($USER_DETAILS as $userdetails): ?>                                                                    
-                            
+
+                <?php foreach ($USER_DETAILS as $userdetails): ?>
+
 
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -105,7 +112,7 @@ require_once("top_includes.php");
                                 </div>
                             </div>
                         </li>
-         
+
                         <li class="divider"></li>
                         <li>
                             <div class="text-center link-block">

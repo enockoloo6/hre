@@ -92,29 +92,39 @@ class Housesearch_model extends CI_Model{
             'house_id',
             );
 
-            $filter = array(
-            'user_id' => !$user_id,           
-            );
-
-    	    $this->db->select('*');
+    	    $this->db->select('user_id');
             $this->db->from('ratings');
-            // $this->db->where($filter);           
             $query = $this->db->get();
+            $queryArr = $query->result_array();
 
-			foreach ($query->result_array() as $row)
-			{
-			        echo $row['rating'];
-			        echo $row['house_id'];			        
-			}
-			// $ratings_arr;
-			// // Format for passing into jQuery loop
-			// foreach ($query->result() as $the_ratings) {
-			// 	$ratings_arr[] = $the_ratings->house_id."==".$the_ratings->rating;
-			// }
+    foreach ($queryArr as $row) {
 
-			// return $ratings_arr;
-		
-            // return $query;    	
+        $this->db->select('user_id, house_id, rating');
+        $this->db->from('ratings');
+        $this->db->where('user_id', $row['user_id']);
+        $query2 = $this->db->get();
+        $result2 = $query2->result_array();
+
+        foreach ($result2 as $row) {
+
+            $house_id_and_rating = $row['rating'];
+            if($row['rating'] != 0 || $query2->num_rows() <= 0){
+            $data2[$row['house_id']] = $house_id_and_rating;//use the house id as the index for the ratings
+            }
+        }
+
+        $final[$row['user_id']] = $data2;
+    }
+
+        return $final;
+
+        require_once("recommend.php");
+        $re = new Recommend();
+
+        echo "<pre>";
+        print_r($re->getRecommendations($data, "3"));
+        echo "</pre>";
+  	
     }
 
 }

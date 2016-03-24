@@ -93,15 +93,18 @@ function geocodeAddress(geocoder, resultsMap) {
   //for( i=0; i< address.length; i++) {
 
   $.getJSON('http://localhost/xampp/hre/index.php/housesearch/house_locations', function(data) {
+    console.log("data", data);
     $(data).each(function(key, value) {
 
     address = value + ",Nairobi,Kenya";
+
 
     geocoder.geocode(
       {
         // 'address': address[i]
         'address': address
       },
+
       function(results, status) {
         console.log("results", results);
         console.log("status", status);
@@ -110,6 +113,7 @@ function geocodeAddress(geocoder, resultsMap) {
         var marker = new google.maps.Marker({
           map: resultsMap,
           position: results[0].geometry.location
+
         });
       } else {
         alert('Geocode was not successful for the following reason: ' + status);

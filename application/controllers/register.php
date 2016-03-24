@@ -17,6 +17,13 @@ class Register extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
+    function __construct()
+    {
+        parent::__construct();
+        $this->load->model('user_model');
+    }
+
+
 	public function index()
 	{
 		$this->load->view('register');
@@ -127,7 +134,28 @@ class Register extends CI_Controller {
             }
 
 
-            elseif ($role == 0) {
+            elseif ($role == 0 && $is_valid) {
+
+                $role = $is_valid[0]['role'];
+                $user_id = $is_valid[0]['user_id'];
+                $f_name = $is_valid[0]['f_name'];
+                $email = $is_valid[0]['email'];
+                $other_names = $is_valid[0]['other_names'];
+
+                //$photo = $is_valid[0]['photo'];
+                //print_r($is_valid);
+                $data = array(
+                    'email' => $email,
+                    'user_id' => $user_id,
+                    'is_logged_in' => true,
+                    'role' => $role,
+                    'f_name' => $f_name,
+                    //'photo' => $photo,
+                    'other_names'=>$other_names
+
+                );
+                $this->session->set_userdata($data);
+
                 $this->user_model->get_profile_image_for_the_logged_in_user();                
                 redirect(base_url()."index.php/housesearch");                
             }
@@ -221,7 +249,45 @@ function post_profile_photo(){
  
     return $config;
 }
+/*************post othere user details*****************************************************/
 
+    function post_extra_user_details(){
+
+        $interest = $this->input->post('interest');
+        $occupation = $this->input->post('occupation');
+        $gender = $this->input->post('gender');
+        $age_group = $this->input->post('age_group');
+        $uri = $this->input->post('theuri');
+
+        $interest_array = array(
+            //'image_id' => $house_id,
+            'interest_name' => $interest
+        );
+        $occupation_array = array(
+            'occupation_name' => $occupation
+        );
+
+        $other_info_array = array(
+            'gender' => $gender,
+            'age' => $age_group
+        );
+
+        $this->load->model('user_model');
+        $this->user_model->add_age_and_gender($other_info_array);
+        $this->user_model->add_interests_for_a_user($interest_array);
+        $this->user_model->add_occupations_for_a_user($occupation_array);
+
+        if($uri == "housesearch"){
+
+            $this->session->set_flashdata('datasuccess', 'Hello '.$this->session->userdata('f_name').' you succesfully updated your details');
+            redirect(base_url().'index.php/housesearch');
+        }
+        else if($uri == "profile"){
+            $this->session->set_flashdata('datasuccess', 'Hello '.$this->session->userdata('f_name').' you succesfully updated your details');
+            redirect(base_url().'index.php/profile');
+        }
+
+    }
 }
 
 /* End of file welcome.php */

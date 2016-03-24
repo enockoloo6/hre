@@ -34,7 +34,7 @@ class profile extends MY_Controller {
         $this->load->model('user_model');        
 
         $data['USER_DETAILS'] = $this->user_model->get_user($user_id); 
-        $data['HOUSE_DETAILS'] = $this->profile_model->show_all_houses();        
+        $data['HOUSE_DETAILS'] = $this->profile_model->show_posted_houses();
         $data['IMAGE'] = $this->profile_model->show_images();        
         $this->load->view('profile',$data);
 
@@ -112,7 +112,6 @@ class profile extends MY_Controller {
 
          $this->db->where('house_id', $id);
          $this->db->delete('house_details');
-
          $this->session->set_flashdata('message', 'House '.$id.' was deleted succesfully');
          redirect(base_url().'index.php/profile', 'refresh');
   }
@@ -209,4 +208,15 @@ private function set_upload_options(){
  
     return $config;
 }
+
+
+
+// $tags = "fiction,non-fiction,horror,romance"; 
+
+// $tags = explode(',', $tags);
+
+// foreach( $tags as $tag ){
+//     echo '<a href="'.$tag.'">'.$tag.'</a><br />';
+// }
+
 }

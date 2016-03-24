@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class housesearch extends CI_Controller {
+class housesearch extends MY_Controller {
 
 	    private $data;
         protected $before_filter = array(
@@ -56,7 +56,11 @@ class housesearch extends CI_Controller {
         //$user_rating = $this->housesearch_model->get_particular_rating($user_id);
         $users_ratings = $this->housesearch_model->get_other_ratings($user_id);
 
+
+        echo "<pre>";
         print_r($users_ratings);
+
+        echo "</pre>";
 
         return false; 
         //$other_users_ratings = $this->user_model->get_other_ratings($user_id);
@@ -120,8 +124,6 @@ class housesearch extends CI_Controller {
         //header('Content-Type: application/x-json; charset=utf-8');
         echo json_encode($house_house_locations);
     }
-
-
                
 
 } 
