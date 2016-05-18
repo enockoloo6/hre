@@ -147,11 +147,6 @@ function ratethree(){
 
     document.getElementById("ratingvalue").setAttribute("value","3");
     //var ass = document.getElementById("house-id1").removeAttribute("value");
-    
-    //document.getElementById("house-id1").setAttribute("value",document.getElementById("house-id2"));
-  
-
-
 }
 
 function ratetwo(){
@@ -285,4 +280,4 @@ $(document).ready(function(){
         }
     });
 });
-    
+

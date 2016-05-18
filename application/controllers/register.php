@@ -133,7 +133,6 @@ class Register extends CI_Controller {
                     
             }
 
-
             elseif ($role == 0 && $is_valid) {
 
                 $role = $is_valid[0]['role'];
@@ -155,8 +154,7 @@ class Register extends CI_Controller {
 
                 );
                 $this->session->set_userdata($data);
-
-                $this->user_model->get_profile_image_for_the_logged_in_user();                
+                //$this->user_model->get_profile_image_for_the_logged_in_user();                
                 redirect(base_url()."index.php/housesearch");                
             }
 
@@ -175,6 +173,7 @@ class Register extends CI_Controller {
         $national_id=$this->input->post('national_id');
         $password=$this->input->post('password');
         $user_id=$this->input->post('user_id');
+        $uri = $this->input->post('theuri');
         if(empty($password))
         {
             $password=1111;
@@ -183,9 +182,17 @@ class Register extends CI_Controller {
         $this->load->model('user_model');
         if($this->user_model->edit_user($f_name,$other_names,$phone_number,$national_id,$password,$email,$user_id))
         {
-            $data['flash_message']=TRUE;
-            //$this->load->view('register', $data);
-            redirect(base_url()."index.php/users");
+            if($uri == "users"){
+                $data['flash_message']=TRUE;
+                //$this->load->view('register', $data);
+                redirect(base_url()."index.php/users");
+            }
+            else if($uri == "profile"){
+                redirect(base_url().'index.php/profile');
+            }
+            else if($uri == "housesearch"){
+                redirect(base_url().'index.php/housesearch');
+            }
         }
     }
 
@@ -230,9 +237,9 @@ function post_profile_photo(){
        $image = array(
             //'image_id' => $house_id,                
             'image_name' => $full_image_name,
-            'user_id' => $uid,
+            'user_id' => $uid
         );
-        
+
         //echo $full_image_name.$uid;      
         $this->user_model->add_profile_photo($image);
         redirect(base_url().'index.php/profile'); 
@@ -273,9 +280,25 @@ function post_profile_photo(){
         );
 
         $this->load->model('user_model');
-        $this->user_model->add_age_and_gender($other_info_array);
+        if($age_group != "--SELECT--"){
+           $this->user_model->add_age_and_gender($other_info_array);
+        }
+
+        if($interest != "" || $interest != NULL ){
         $this->user_model->add_interests_for_a_user($interest_array);
+        }
+        if($occupation != "" || $occupation != NULL ){
         $this->user_model->add_occupations_for_a_user($occupation_array);
+        }
+
+        if($interest == "" && $occupation == "" && $age_group == "--SELECT--" && $uri == "housesearch"){
+            $this->session->set_flashdata('datadenied', 'Hello '.$this->session->userdata('f_name').' no changes made because no change is detected');
+            redirect(base_url().'index.php/housesearch');
+        }
+        if($interest == "" && $occupation == "" && $age_group == "--SELECT--" && $uri == "profile"){
+            $this->session->set_flashdata('datadenied', 'Hello '.$this->session->userdata('f_name').' no changes made because no change is detected');
+            redirect(base_url().'index.php/housesearch');
+        }
 
         if($uri == "housesearch"){
 
@@ -288,6 +311,8 @@ function post_profile_photo(){
         }
 
     }
+
+
 }
 
 /* End of file welcome.php */

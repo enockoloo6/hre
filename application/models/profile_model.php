@@ -55,7 +55,32 @@ class Profile_model extends CI_Model{
 	return $query->result();
     }
 
+    function get_my_houses_locations($user_id){
+    $this->db->distinct();
+    $this->db->select('location');	
+	$this->db->where('owner', $user_id);
+	$query = $this->db->get('house_details');
+	return $query->result();
+    } 
+    function get_my_houses_dates($user_id){
+    $this->db->distinct();
+    $this->db->select('house_post_date');	
+	$this->db->where('owner', $user_id);
+	$query = $this->db->get('house_details');
+	return $query->result();
+    }
+
     /*this function updates data of a particular house given its id*/
+
+	function update_the_house_status($hid, $stus){
+
+			$this->db->where('house_id', $hid);
+			$this->db->update('house_details', $stus);
+		return $this->db->insert_id();
+
+	}
+
+
 	function update_house($hid,$hdata){
     $this->db->where('house_id', $hid);
     $this->db->update('house_details', $hdata);

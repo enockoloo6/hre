@@ -71,6 +71,9 @@
                                             <div class="form-group">
                                                 <input name="f_name" type="text" class="form-control" placeholder="First name" value="<?php echo($user->f_name); ?>" required="">
                                             </div>
+
+                                            <div class="hide"><input type="text" value="<?php echo( $this->uri->segment(1));?>" name="theuri"></div>
+
                                             <div class="form-group">
                                                 <input name="other_names" type="text" class="form-control" placeholder="Other ames" value="<?php echo($user->other_names); ?>">
                                             </div>

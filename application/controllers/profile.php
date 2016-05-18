@@ -28,15 +28,34 @@ class profile extends MY_Controller {
 
     public function show_houses()
     {
-
-
         $user_id = $this->session->userdata('user_id');
-        $this->load->model('user_model');        
+        $this->load->model('user_model');
+        $this->load->model('housesearch_model');
 
-        $data['USER_DETAILS'] = $this->user_model->get_user($user_id); 
+        $data['USER_DETAILS'] = $this->user_model->get_user($user_id);
+        $data['ALL_USER_DETAILS'] = $this->user_model->get_all_users();
         $data['HOUSE_DETAILS'] = $this->profile_model->show_posted_houses();
-        $data['IMAGE'] = $this->profile_model->show_images();        
+        $data['IMAGE'] = $this->profile_model->show_images();
+        $data['CHECK_AGE_GENDER_OCCUPATION_INTEREST'] = $this->user_model->check_interests_age_gender_occupations();
+        $data['MESSAGES'] = $this->housesearch_model-> get_my_messages();
+
         $this->load->view('profile',$data);
+    }
+
+    function update_house_status(){
+
+        $status = ($this->input->post('status'));
+        $house_id = ($this->input->post('house_id'));
+
+            $updatestatus = array(
+                'status' => $status,
+            );
+
+            //print_r($updatestatus);
+
+       $this->profile_model->update_the_house_status($house_id, $updatestatus);
+        //redirect(base_url().'index.php/profile', 'refresh');
+        redirect(base_url().'index.php/profile');
 
     }
     
@@ -78,18 +97,18 @@ class profile extends MY_Controller {
 
         $location= ($this->input->post('house_location'));
         $type= ($this->input->post('house_type'));
-        $rfacility= ($this->input->post('rfacility'));
-        $road= ($this->input->post('road'));
         $price_range= ($this->input->post('price_range'));
         $house_id= ($this->input->post('house_id'));
+        $description = ($this->input->post('house_description'));
+        $name = ($this->input->post('house_name'));
 
         $house_data = array(
+            'house_name' => $name,
             'type' => $type,            
             'location' => $location,
-            'rfacility' => $rfacility,
-            'road' => $road,
             'price' => $price_range,
             'photo1' => $full_image_name,
+            'house_description' => $description,
             'owner' => $this->session->userdata('user_id'),
 
         );
@@ -138,24 +157,24 @@ function post_new_house(){
             $file_size  =   $upload_data['file_size'];
             $file_path  =   $upload_data['file_path'];
 
-
             $myownpath = 'assets/img2/';
             $full_image_name = $myownpath.$file_name;
 
 // post the photo name and other form fields to the database
         $location= ($this->input->post('house_location'));
         $type= ($this->input->post('house_type'));
-        $rfacility= ($this->input->post('rfacility'));
-        $road= ($this->input->post('road'));
-        $price_range= ($this->input->post('price_range'));
+        $description = ($this->input->post('house_description'));
+        $price_range = ($this->input->post('price_range'));
+        $name = ($this->input->post('house_name'));
 
         $house = array(
+            'house_name' => $name,
             'type' => $type,            
             'location' => $location,
-            'rfacility' => $rfacility,
-            'road' => $road,
             'price' => $price_range,
             'photo1' => $full_image_name,
+            'house_description' => $description,
+
             'owner' => $this->session->userdata('user_id'),
 
         );

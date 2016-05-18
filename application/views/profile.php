@@ -3,10 +3,10 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
    <div class="col-sm-4">
-        <h2>Profile</h2>
+        <h2 style="color: #b3b3b3">Profile</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="index.html">This is</a>
+                    <a style="color: #b3b3b3" href="index.html">This is</a>
                 </li>
                 <li class="active">
                     <strong>Profile</strong>
@@ -28,7 +28,7 @@
 
 <div class="col-sm-4">
 <div class="title-action">
-    <a href="#" class="btn btn-primary">Post new or update existing houses</a>
+    <a href="#" class="btn btn-primary">Add or update houses</a>
 </div>
 </div>
 </div>
@@ -44,8 +44,18 @@
                         <tbody>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-default m-r-sm">0</button> 
-                                <b style="color: #b3b3b3">Total messages</b>
+                                <?php foreach ($USER_DETAILS as $userdetails): ?>
+                                    <?php
+                                    $c = 0;
+                                    foreach ($MESSAGES as $messages):
+                                        if($messages->message_status=='unread'){
+                                            $c++;
+                                        }
+                                    endforeach;
+                                endforeach;
+                                    ?>
+                                <button type="button" class="btn btn-default m-r-sm"><i class="fa fa-envelope-o"></i><?php echo(" ".$c);?></button>
+                                <b style="color: #b3b3b3"> Messages </b>
 
                             </td>
                             <td>
@@ -53,7 +63,7 @@
 
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-primary m-r-sm"> 
+                                <button type="button" class="btn btn-primary m-r-sm"> <i class="fa fa-institution"></i>
 
                                 <?php
                                 $count = 0;
@@ -67,14 +77,21 @@
                         </tr>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-info m-r-sm">0</button>
+                                <button type="button" class="btn btn-info m-r-sm"><i class="fa fa-edit"> 0</i></button>
                                <b style="color: #b3b3b3">Comments</b>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-warning m-r-sm">0</button>
+                                <button type="button" class="btn btn-warning m-r-sm"><i class="fa fa-bell-o"></i> <?php echo ' '.$count+$c;?></button>
                                 <b style="color: #b3b3b3">All Notifications</b>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-warning m-r-sm"><i class="fa fa-envelope-o"></i></button>
+                                 <a href="<?php base_url()?>messages"><b style="color: #b3b3b3">See all messages</b></a>
                             </td>
                         </tr>
 
@@ -84,9 +101,7 @@
             </div>
 
 
-
-
-
+<?php if($CHECK_AGE_GENDER_OCCUPATION_INTEREST){?>
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5><div style="color: red"> More information is required</div></h5>
@@ -145,8 +160,7 @@
                     </div>
                     <!-- extra information-->
                 </div>
-
-
+    <?php } ?>
 
             </div>
 
@@ -167,7 +181,7 @@
                                              <?php foreach ($IMAGE as $profileimage): ?>
                                                  <?php if ($profileimage->Image_id == NULL && $profileimage->user_id == $session_user ) {?>                                                                                    
 
-                                                 <img alt="Profile photo" class="img-circle" src="<?php echo(base_url()).$profileimage->image_name; ?>">
+                                                 <img alt="image" height="150px" width="110px" class="img-circle" src="<?php echo(base_url()).$profileimage->image_name; ?>">
 
                                                  <?php } ?>
 
@@ -220,12 +234,7 @@
                                               </div>
                                         <?php endif;?>
                                 </div>
-
-
-
-
                             </div>
-                    
 
                         
                             <div class="ibox-content text-center">
@@ -262,9 +271,63 @@
                                 <?php endforeach; ?>
                                 <?php }?>
 
+
+
+                            <?php foreach ($USER_DETAILS as $profile): ?>
                                 <div class="text-center">
-                                    <a class="btn btn-xs btn-default"><i class="fa fa-edit"></i> Edit </a>                                   
+                                    <a class="btn btn-xs btn-default" a data-target="#edit_profile_modal_<?php echo($profile->user_id); ?>" data-toggle="modal" href="#"><i class="fa fa-edit"></i> Edit </a>
+
+
+                                        <div class="modal inmodal" id="edit_profile_modal_<?php echo($profile->user_id); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content animated bounceInRight">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                                                        <h4 class="modal-title">Hello<strong><?php echo(" ".$profile->f_name." edit your details here"); ?></strong> </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form style="color: black;" class="m-t" method="post" role="form" id="form" action="<?php echo(base_url()); ?>index.php/register/edit_user">
+                                                            <div class="form-group">
+                                                                <label>First name:</label>
+                                                                <input name="f_name" type="text" class="form-control" placeholder="First name" value="<?php echo($profile->f_name); ?>" required="">
+                                                            </div>
+                                                            <div class="hide"><input type="text" value="<?php echo( $this->uri->segment(1));?>" name="theuri"></div>
+
+                                                            <div class="form-group">
+                                                                <label>Other names:</label>
+                                                                <input name="other_names" type="text" class="form-control" placeholder="Other names" value="<?php echo($profile->other_names); ?>">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <input name="email" type="email" class="form-control" placeholder="Email" value="<?php echo($profile->email); ?>" required="">
+                                                            </div>
+                                                            <input type="hidden" name="user_id" value="<?php echo($profile->user_id); ?>" >
+                                                            <div class="form-group">
+                                                                <input name="password" type="password" class="form-control" placeholder="Password" >
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>ID no:</label>
+                                                                <input name="national_id" type="number" class="form-control" value="<?php echo($profile->national_id); ?>" placeholder="National ID number" required="">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Phone no:</label>
+                                                                <input name="phone_number" type="tel" class="form-control" placeholder="Phone Number" value="<?php echo($profile->phone_number); ?>" required="">
+                                                            </div>
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+                                                        <input type="submit" class="btn btn-primary" value="Update" >
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                 </div>
+
+                                    <?php endforeach; ?>
 
                                  </div>
                                 </div>
@@ -275,6 +338,7 @@
 
 
         <div class="col-lg-6">
+
             <div class="ibox float-e-margins">
 
                 <div class="ibox-content">
@@ -283,15 +347,32 @@
                 <div class="chat-activity-list">
                     <h3 class="text-center"><strong>Houses Posted</strong></h3>
     
-                                        <?php $message = $this->session->flashdata('message'); ?>
-                                        <?php if($message):?>
-                                          <script> $('#pModal').modal('show');</script>
-                                            <div class="ibox-content">
+                        <?php $message = $this->session->flashdata('message'); ?>
+                        <?php if($message):?>
+                          <script> $('#pModal').modal('show');</script>
+
+                            <div class="modal inmodal" id="pModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content animated bounceInRight">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                            <i class="fa fa-institution modal-icon"></i>
+                                            <h4 class="modal-title">House details</h4>
+                                            <small class="font-bold">Add the details of your new house here.</small>
+                                        </div>
+
+                                        <div class="ibox-content">
                                             <div class="alert alert-success">
                                              <?php echo $message;?>
-                                            </div>                           
-                                              </div>
-                                        <?php endif;?>
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <?php endif;?>
+
+
 
             <?php foreach ($HOUSE_DETAILS as $posted_houses): ?> 
 
@@ -300,17 +381,24 @@
                             <img alt="image" class="img-circle" src="<?php echo(base_url().$posted_houses->photo1)?>">
                         </a>
                         <div class="media-body ">
-                            <small class="pull-right text-navy"><?php echo $posted_houses->house_post_date ?>d</small>
+                            <small class="pull-right text-navy"><?php echo $posted_houses->house_post_date ?></small>
 
-                            Name: <strong><?php if($posted_houses->house_name=="")echo "  No house name"; else  {echo "  house ".$posted_houses->house_id;} ?></strong><br>
+                            <strong class="text-muted">Name:</strong> <strong><?php if($posted_houses->house_name=="")echo "  No house name"; else  {echo $posted_houses->house_name;} ?></strong><br>
 
-                            Type of house: <strong><?php echo " ".$posted_houses->type; ?></strong>
+                            <strong class="text-muted">Type of house:</strong> <strong><?php echo " ".$posted_houses->type; ?></strong>
                             <p class="m-b-xs">
-
-
-                                House location is in <strong><?php echo " ".$posted_houses->location; ?></strong>
+                                <strong class="text-muted">House located in:</strong> <strong><?php echo " ".$posted_houses->location; ?></strong>
                             </p>
-                            <small class="text-muted"><?php echo $posted_houses->house_post_date ?></small>
+
+                                <form action="<?= base_url();?>index.php/profile/update_house_status" id="form" method="post" enctype="multipart/form-data" autocomplete="on">
+                                    <input class="hide form-control" name="status" value="<?php if($posted_houses->status=="available")echo "booked"; else{echo "available";} ?>" >
+                                    <input class="hide form-control" name="house_id" value="<?php echo $posted_houses->house_id; ?>" >
+                                    <div class="col-sm-6">
+                                    <button type="submit" <?php if($posted_houses->status=="available"){?> class=btn-primary><?php }else{?> class=btn-warning> <?php }?> <strong><?php echo " ".$posted_houses->status; ?></strong></button>
+                                        <div <?php if($posted_houses->status=="available"){?> style="color: #1AB394"><i class="fa fa-arrow-up"></i> <?php }else{?> style="color: #cd6e00"><i class="fa fa-arrow-up"></i> <?php }?> click here to<?php if($posted_houses->status=="available")echo " book"; else{echo " free";} ?> </div>
+                                    </div>
+                                </form>
+
 
                                 <div class="text-right">
                                    
@@ -325,31 +413,20 @@
                                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                                         <i class="fa fa-institution modal-icon"></i>
                                                         <h4 class="modal-title">House no <?php echo $posted_houses->house_id; ?> details</h4>
-                                                        <small class="font-bold">Edit the details of house no <?php echo $posted_houses->house_id; ?> here and update them.</small>
+                                                        <small class="font-bold">Edit the details for house no <?php echo $posted_houses->house_id; ?> here and update them.</small>
                                                     </div>
 
                                                     <form action="<?= base_url();?>index.php/profile/update_house_details" id="form" method="post" enctype="multipart/form-data" autocomplete="on">
                                                     <div class="modal-body">
                                                             
                                                             <div class="form-group hide"><label>House id</label> <input type="text" name="house_id" placeholder="Location choice" class="form-control" value="<?php echo $posted_houses->house_id; ?>"></div>
-                                                            <div class="form-group hide"><label>House name</label> <input type="text" name="house_tittle" placeholder="Location choice" class="form-control" value="<?php echo $posted_houses->house_id; ?>"></div>
-                                                                                                     
-                                                            <label>Location</label>
-                                                                <select name="house_location" class="form-control">                                                                 
-                                                                 <option <?php if($posted_houses->location == 'Langata'){echo"selected";}?>>Langata</option>
-                                                                 <option <?php if($posted_houses->location == 'Ngong'){echo"selected";}?>>Ngong</option>
-                                                                 <option <?php if($posted_houses->location == 'Rongai'){echo"selected";}?>>Rongai</option>
-                                                                 <option <?php if($posted_houses->location == 'Dagoretti'){echo"selected";}?>>Dagoretti</option>
-                                                                 <option <?php if($posted_houses->location == 'Adams'){echo"selected";}?>>Adams</option>
-                                                                 <option <?php if($posted_houses->location == 'Kileleshwa'){echo"selected";}?>>Kileleshwa</option>
-                                                                 <option <?php if($posted_houses->location == 'Kibera'){echo"selected";}?>>Kibera</option>
-                                                                 <option <?php if($posted_houses->location == 'Buruburu'){echo"selected";}?>>Buruburu</option>
-                                                                <option <?php if($posted_houses->location == 'Baba dogo'){echo"selected";}?>>Baba dogo</option>
-                                                                <option <?php if($posted_houses->location == 'makadara'){echo"selected";}``?>>Makadara</option>
-                                                                <option <?php if($posted_houses->location == 'ruaraka'){echo"selected";}?>>Ruaraka</option>
-                                                                </select>
+                                                            <div class="form-group"><label>House name</label> <input type="text" name="house_name" placeholder="House tittle" class="form-control" value="<?php echo $posted_houses->house_name; ?>"></div>
 
-                                                            <label>Type of house</label>
+                                                        <div class="form-group"><label>Location</label> <input type="text" name="house_location" readonly="readonly" class="form-control" value="<?php echo $posted_houses->location ; ?>"></div>
+
+
+
+                                                        <label>Type of house</label>
                                                                 <select name="house_type" class="form-control">                                                                 
                                                                  <option <?php if($posted_houses->type == 'Single room'){echo"selected";}?>>Single room</option>
                                                                  <option <?php if($posted_houses->type == 'Double room'){echo"selected";}?>>Double room</option>
@@ -385,7 +462,8 @@
         <?php endforeach; ?>
 
                 </div>
-                </div>
+                </div>                
+
                         <div class="chat-form">
 
                             <form role="form">
@@ -403,13 +481,13 @@
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                             <i class="fa fa-institution modal-icon"></i>
                                             <h4 class="modal-title">House details</h4>
-                                            <small class="font-bold">You can add the details of your new house and post them here.</small>
+                                            <small class="font-bold">You can add the details of the new house here.</small>
                                         </div>
 
                                         <form action="<?= base_url();?>index.php/profile/post_new_house" id="form" method="post" enctype="multipart/form-data">
                                         <div class="modal-body"> 
 
-                                            <div class="form-group"><label>House name</label> <input type="text" name="house_tittle" placeholder="house name" class="form-control"></div>
+                                            <div class="form-group"><label>House name</label> <input type="text" name="house_name" placeholder="house name" class="form-control"></div>
 
                                             <div class="form-group">
                                             <label>County</label>
@@ -494,7 +572,7 @@
                                                 
                                             <div class="form-group"><label>House image</label> <input type="file" name="userfile[]" placeholder="captured image of the house" class="form-control"></div>
                                             <div class="form-group"><label>Other descriptions</label> <input type="text" name="house_description" placeholder="enter the house price" class="form-control"></div>
-                                            <div class="form-group"><label>Price</label> <input type="text" name="price_range" placeholder="enter the house price" class="form-control"></div>
+                                            <div class="form-group"><label>Price</label> <input type="text" name="price_range" placeholder="price of the house" class="form-control" required="required"></div>
 
                                         </div>
                                         <div class="modal-footer">
@@ -512,9 +590,9 @@
                         </div>
                 </div>
             </div>
-        </div>
 
-
+        </div>  
+      
 
         </div>
 

@@ -25,7 +25,11 @@
             success rate = number of successfull searches/ total number of searches
             failure rate = number of unsuccessfull searches/ total number of searches
 
-            represent using a piechart
+            represent using a piechart<br>
+
+
+
+            WE ALSO GIVE REPORT ON THE MOST VISITED PAGES TO THE LIST VISITED PAGES
 
 
         </div>

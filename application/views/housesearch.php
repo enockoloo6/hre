@@ -1,6 +1,5 @@
 <?php require_once("includes/header.php"); ?>
 
-
     <div class="row wrapper border-bottom white-bg page-heading" xmlns="http://www.w3.org/1999/html">
         <div class="col-sm-4">
             <h2>Housing Recommendation</h2>
@@ -22,7 +21,6 @@
             </div>
         </div>
     </div>
-
      <!--modal form for new houses -->
 
                             <div class="modal inmodal" id="housesearchModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -33,15 +31,11 @@
                                             <i class="fa fa-institution modal-icon"></i>
                                             <h4 class="modal-title">House details</h4>
                                             <small class="font-bold">Fill in the details of the house you need and we can help you find it.</small>
-                                            <h3 class="font-bold">Leave blank if not applicable.</h3>
 
                                         </div>
 
-                                        <form action="<?= base_url();?>index.php/post_new_house" id="form" method="post" enctype="multipart/form-data">
+                                        <form action="<?= base_url();?>index.php/housesearch/search_results" id="form" method="post" enctype="multipart/form-data">
                                         <div class="modal-body">
-
-
-
 
                                             <div class="form-group">
                                                 <label>County</label>
@@ -104,11 +98,8 @@
 
                                             <select name="house_location" id="json-two" class="form-control"
                                                             title="Location" admin="1" frontend="1">
-                                                        <option>Please choose from above</option>
+                                                        <option>Select the county first</option>
                                             </select>
-
-
-
 
                                                 <label>Type of house</label>
                                                     <select name="house_type" class="form-control"> 
@@ -123,21 +114,22 @@
                                                     </select>
 
                                                 <label>Price range.</label>
-                                                    <select name="price_range" class="form-control">                                                                 
+                                                    <select name="price" class="form-control">
                                                      <option>--SELECT--</option>
-                                                     <option>1000-3000</option>
-                                                     <option>3001-5000</option>
-                                                     <option>5001-10000</option>
-                                                     <option>10001+</option>
-                                                    </select>
+                                                     <option value="10003000">1000-3000</option>
+                                                     <option value="30015000">3001-5000</option>
+                                                     <option value="500110000">5001-10000</option>
+                                                    <option value="1000115000">10001-15000</option>
+                                                    <option value="1500120000">15000-20000</option>
+                                                    <option value="above20">20000+</option>
+                                                </select>
 
-                                                <div class="form-group"><label>Health facility</label> <input type="text" name="f_name" placeholder="Any recreational facility you wish to find within or around" class="form-control"></div>
-
+<!--                                                <div class="form-group"><label>Health facility</label> <input type="text" name="f_name" placeholder="Any recreational facility you wish to find within or around" class="form-control"></div>-->
 
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Search</button>
+                                            <button type="submit" class="btn btn-primary">Search</button>
                                         </div>
                                     </form>
                                     </div>
@@ -145,12 +137,208 @@
                             </div>
                 <!-- end of the modal form -->
 
-
-
         <div class="wrapper wrapper-content">
             <div class="row">
+
+
+
+                <div class="col-lg-3">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="ibox-heading">
+                                <h4 style="color: #17a185">sample recommendations</h4><br>
+                            </div>
+                            <div>
+
+                              <?php if($AGE_BASED_RECOMMENDATION != ""){ ?>
+                                <h4 style="color: #b3b3b3">people around your age also rated.. </h4>
+                               <?php } ?>
+
+                                <?php
+                                $house_count=0;
+
+                                if($AGE_BASED_RECOMMENDATION != ""){
+                                foreach($AGE_BASED_RECOMMENDATION as $gender_house_r){
+                                    $house_count++;
+                                    ?>
+
+
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-content ">
+                                            <div class="carousel-inner">
+                                                <div class="item active">
+
+                                                    <?php foreach ($IMAGE as $image):  if ($image->Image_id == $gender_house_r->house_id) {?>
+
+                                                    <a data-target="#see_house_details_<?php echo($gender_house_r->house_id); ?>" data-toggle="modal" href="#"><img alt="House image" class="img-responsive" src="<?php echo(base_url()).$image->image_name; ?>"></a>
+
+                                                    <div class="carousel-caption">
+                                                        <b>House no <?php echo ' '.$gender_house_r->house_id ?></b><br> <p>click on the house image to view details</p>
+                                                    </div>
+
+
+                                                    <div class="modal inmodal" id="see_house_details_<?php echo($gender_house_r->house_id); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content animated bounceInRight">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                                                                    <h4 class="modal-title">Details for <strong><?php echo($gender_house_r->type); ?></strong> </h4>
+                                                                    <img alt="House image" class="img-responsive" src="<?php echo(base_url()).$image->image_name; ?>">
+
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <div class="form-group">
+                                                                        <label>Owner no:</label>
+                                                                        <input class="form-control" value="<?php echo($gender_house_r->owner); ?>" disabled="disabled">
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>Description</label>
+                                                                        <input type="text" class="form-control" value="<?php echo($gender_house_r->type); ?>" disabled="disabled">
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>Date posted</label>
+                                                                        <input type="text" class="form-control" value="<?php echo($gender_house_r->house_post_date); ?>" disabled="disabled">
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>House location</label>
+                                                                        <input type="text" class="form-control" value="<?php echo($gender_house_r->location); ?>" disabled="disabled">
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>Price</label>
+                                                                        <input type="text" class="form-control" value="<?php echo($gender_house_r->price); ?>" disabled="disabled">
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <?php } endforeach;?>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <?php
+                                }
+                                }
+                                ?>
+
+                             <?php if($INTEREST_BASED_RECOMMENDATION != ""){ ?>
+                                <h4 style="color: #b3b3b3">Ipeople with interest like yours also rated..</h4>
+                             <?php } ?>
+
+                                <?php
+
+                                $house_count=0;
+
+                                if($INTEREST_BASED_RECOMMENDATION != ""){
+                                    foreach($INTEREST_BASED_RECOMMENDATION as $interest_house_r){
+                                        $house_count++;
+                                        ?>
+
+
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-content ">
+                                                <div class="carousel-inner">
+                                                    <div class="item active">
+
+                                                        <?php foreach ($IMAGE as $image):  if ($image->Image_id == $interest_house_r->house_id) {?>
+
+                                                        <a data-target="#see_house_details_<?php echo($interest_house_r->house_id); ?>" data-toggle="modal" href="#"><img alt="House image" class="img-responsive" src="<?php echo(base_url()).$image->image_name; ?>"></a>
+
+                                                        <div class="carousel-caption">
+                                                            <p>House no <?php echo ' '.$interest_house_r->house_id ?></p>
+                                                        </div>
+
+
+                                                        <div class="modal inmodal" id="see_house_details_<?php echo($interest_house_r->house_id); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content animated bounceInRight">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                                                                        <h4 class="modal-title">Details for <strong><?php echo($interest_house_r->type); ?></strong> </h4>
+                                                                        <img alt="House image" class="img-responsive" src="<?php echo(base_url()).$image->image_name; ?>">
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+
+                                                                        <div class="form-group">
+                                                                            <label>Owner no:</label>
+                                                                            <input class="form-control" value="<?php echo($interest_house_r->owner); ?>" disabled="disabled">
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Description</label>
+                                                                            <input type="text" class="form-control" value="<?php echo($interest_house_r->type); ?>" disabled="disabled">
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Date posted</label>
+                                                                            <input type="text" class="form-control" value="<?php echo($interest_house_r->house_post_date); ?>" disabled="disabled">
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>House location</label>
+                                                                            <input type="text" class="form-control" value="<?php echo($interest_house_r->location); ?>" disabled="disabled">
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Price</label>
+                                                                            <input type="text" class="form-control" value="<?php echo($interest_house_r->price); ?>" disabled="disabled">
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                    <?php } endforeach;?>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <?php
+                                    }
+                                }
+                                ?>
+
+
+                            </div>
+
+                            <?php if($INTEREST_BASED_RECOMMENDATION != ""){ ?>
+                            <a href="<?= base_url();?>index.php/housesearch/show_recommendations"><b>See all recommended houses</b></a>
+                           <?php  }
+                            if($INTEREST_BASED_RECOMMENDATION == "" && $OCCUPATION_BASED_RECOMMENDATION == "" && $AGE_BASED_RECOMMENDATION == "" && $GENDER_BASED_RECOMMENDATION == ""){?>
+                             <b> No recommendations yet,</b><br> <b> fill in required data first</b> <?php }?>
+                        </div>
+                    </div>
+                </div>
+
  
-                <div class="col-lg-9">
+                <div class="col-lg-6">
                     <div class="ibox float-e-margins">
 
                         <div class="ibox-content ">
@@ -162,21 +350,27 @@
                                 </ol>
                                 <div class="carousel-inner">
                                     <div class="item active">
-                                        <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big1.jpg">
+                                        <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/auto/auto4.jpg">
                                         <div class="carousel-caption">
-                                            <p>This is simple caption 1</p>
+                                            <p>HRE</p>
                                         </div>
                                     </div>
                                     <div class="item ">
-                                        <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big3.jpg">
+                                        <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/auto/auto2.jpg">
                                         <div class="carousel-caption">
-                                            <p>This is simple caption 2</p>
+                                            <p>HRE 2</p>
                                         </div>
                                     </div>
                                     <div class="item">
-                                        <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/p_big2.jpg">
+                                        <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/auto/auto3.jpg">
                                         <div class="carousel-caption">
-                                            <p>This is simple caption 3</p>
+                                            <p>HRE 3</p>
+                                        </div>
+                                    </div>
+                                   <div class="item">
+                                        <img alt="image"  class="img-responsive" src="<?php echo(base_url()); ?>assets/img/auto/auto1.jpg">
+                                        <div class="carousel-caption">
+                                            <p>HRE 3</p>
                                         </div>
                                     </div>
                                 </div>
@@ -189,16 +383,83 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
+                    <div class="col-lg-12">
+                        <?php $success_rating = $this->session->flashdata('ratingsuccess');
+                        if($success_rating){
+                            ?>
+                            <div class="alert alert-success">
+                                <?php echo($success_rating); ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                        <?php foreach ($USER_DETAILS as $profile): ?>
+                            <div class="text-center">
+                                <a class="btn btn-xs btn-default" a data-target="#edit_profile_modal_<?php echo($profile->user_id); ?>" data-toggle="modal" href="#"><i class="fa fa-edit"></i> Edit your personal details </a>
+
+
+                                <div class="modal inmodal" id="edit_profile_modal_<?php echo($profile->user_id); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content animated bounceInRight">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                                                <h4 class="modal-title">Hello<strong><?php echo(" ".$profile->f_name." edit your details here"); ?></strong> </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form style="color: black;" class="m-t" method="post" role="form" id="form" action="<?php echo(base_url()); ?>index.php/register/edit_user">
+                                                    <div class="form-group">
+                                                        <label>First name:</label>
+                                                        <input name="f_name" type="text" class="form-control" placeholder="First name" value="<?php echo($profile->f_name); ?>" required="">
+                                                    </div>
+                                                    <div class="hide"><input type="text" value="<?php echo( $this->uri->segment(1));?>" name="theuri"></div>
+
+                                                    <div class="form-group">
+                                                        <label>Other names:</label>
+                                                        <input name="other_names" type="text" class="form-control" placeholder="Other names" value="<?php echo($profile->other_names); ?>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input name="email" type="email" class="form-control" placeholder="Email" value="<?php echo($profile->email); ?>" required="">
+                                                    </div>
+                                                    <input type="hidden" name="user_id" value="<?php echo($profile->user_id); ?>" >
+                                                    <div class="form-group">
+                                                        <input name="password" type="password" class="form-control" placeholder="Password" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>ID no:</label>
+                                                        <input name="national_id" type="number" class="form-control" value="<?php echo($profile->national_id); ?>" placeholder="National ID number" required="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Phone no:</label>
+                                                        <input name="phone_number" type="tel" class="form-control" placeholder="Phone Number" value="<?php echo($profile->phone_number); ?>" required="">
+                                                    </div>
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+                                                <input type="submit" class="btn btn-primary" value="Update" >
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <?php endforeach; ?>
+
+                    </div>
+                    <div class="col-lg-4"></div>
+
+                </div>
 
 
                 <div class="col-lg-3">
 
-
-<?php foreach ($USER_DETAILS as $logged_user): ?>
-
-
+    <?php if($CHECK_AGE_GENDER_OCCUPATION_INTEREST){?>
                   <div class="ibox ">
                       <?php   ?>
 
@@ -209,8 +470,8 @@
                         <div class="ibox-content">
 
                                 <div class="sk-spinner sk-spinner-double-bounce">
-                                    <div class="sk-double-bounce1"> <a More_options_addition_to_house_search()> <i class="fa fa-arrow-down"> click left</i></a> </div>
-                                    <div class="sk-double-bounce2"> <a More_options_addition_to_house_search()> <i class="fa fa-arrow-down"></i></a> </div>
+                                    <div class="sk-double-bounce1"> <a onClick="More_options_addition_to_house_search()"> <i class="fa fa-arrow-down"> click left</i></a> </div>
+                                    <div class="sk-double-bounce2"> <a onClick="More_options_addition_to_house_search()"> <i class="fa fa-arrow-down"></i></a> </div>
                                 </div>
                                 <b style="color: #3a4459"><a onClick="More_options_addition_to_house_search()">click here to add</a></b>
                         </div>
@@ -262,7 +523,7 @@
                         <!-- extra information-->
                     </div>
 
-<?php endforeach; ?>
+<?php } ?>
 
                     <?php $success_post = $this->session->flashdata('datasuccess');
 
@@ -275,14 +536,219 @@
                             </div>
                         </div>
                     </div>
+                    <?php }
+
+                    $denied_post = $this->session->flashdata('datadenied'); 
+                    if($denied_post){ ?>
+
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="alert alert-danger">
+                                <?php echo($denied_post); ?>
+                            </div>
+                        </div>
+                    </div>
+
                     <?php } ?>
 
                     <div class="ibox">
                         <div class="ibox-content">
                             <div class="ibox-heading">
-                                <b>sample recommended houses</b>
+                                <h4 style="color: #17a185">sample recommendations</h4><br>
                             </div>
-                            <a href="<?= base_url();?>index.php/housesearch/show_recommendations" class="btn btn-primary"><b>See all recommended houses</b></a>
+                            <div>
+
+                                <?php if($GENDER_BASED_RECOMMENDATION != ""){ ?>
+                                    <h4 style="color: #b3b3b3">same gender also rated..</h4>
+                                <?php } ?>
+
+                                <?php
+                                if($GENDER_BASED_RECOMMENDATION != ""){
+
+                                $house_count=0;
+                                foreach($GENDER_BASED_RECOMMENDATION as $gender_house_r){
+                                    $house_count++;
+                                    ?>
+
+
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-content ">
+                                            <div class="carousel-inner">
+                                                <div class="item active">
+
+                                                    <?php foreach ($IMAGE as $image):  if ($image->Image_id == $gender_house_r->house_id ) { ?>
+
+                                                        <a data-target="#see_house_details_<?php echo($gender_house_r->house_id); ?>" data-toggle="modal" href="#"><img alt="House image" class="img-responsive" src="<?php echo(base_url()).$image->image_name; ?>"></a>
+
+                                                        <div class="carousel-caption">
+                                                            <p>House no <?php echo ' '.$gender_house_r->house_id ?></p>
+                                                        </div>
+
+
+                                                                <div class="modal inmodal" id="see_house_details_<?php echo($gender_house_r->house_id); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content animated bounceInRight">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                                                                                <h4 class="modal-title">Details for <strong><?php echo($gender_house_r->type); ?></strong> </h4>
+                                                                                <img alt="House image" class="img-responsive" src="<?php echo(base_url()).$image->image_name; ?>">
+
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                
+                                                                                    <div class="form-group">
+                                                                                        <label>Owner no:</label>
+                                                                                        <input class="form-control" value="<?php echo($gender_house_r->owner); ?>" disabled="disabled">
+                                                                                    </div>
+
+                                                                                    <div class="form-group">
+                                                                                        <label>Description</label>
+                                                                                        <input type="text" class="form-control" value="<?php echo($gender_house_r->type); ?>" disabled="disabled">
+                                                                                    </div>
+
+                                                                                    <div class="form-group">
+                                                                                        <label>Date posted</label>
+                                                                                        <input type="text" class="form-control" value="<?php echo($gender_house_r->house_post_date); ?>" disabled="disabled">
+                                                                                    </div>
+
+                                                                                    <div class="form-group">
+                                                                                    <label>House location</label>
+                                                                                    <input type="text" class="form-control" value="<?php echo($gender_house_r->location); ?>" disabled="disabled">
+                                                                                    </div>
+
+                                                                                    <div class="form-group">
+                                                                                        <label>Price</label>
+                                                                                        <input type="text" class="form-control" value="<?php echo($gender_house_r->price); ?>" disabled="disabled">
+                                                                                    </div>
+                                                            
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>                                                                                
+                                                                            </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+
+                                                    <?php } endforeach;?>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                   <!--  <?php //echo $house_count.' '.$gender_house_r->type.'<br><br>'; ?> -->
+                                <?php
+                                }
+                                }
+                                ?>
+
+
+                                <?php if($OCCUPATION_BASED_RECOMMENDATION != ""){ ?>
+                                    <h4 style="color: #b3b3b3">people with similar occupations also liked..</h4>
+                                <?php } ?>
+
+
+                                <?php
+
+                                $house_count=0;
+
+                                if($OCCUPATION_BASED_RECOMMENDATION != ""){
+                                    foreach($OCCUPATION_BASED_RECOMMENDATION as $occupation_house_r){
+                                        $house_count++;
+                                        ?>
+
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-content ">
+                                                <div class="carousel-inner">
+                                                    <div class="item active">
+
+                                                        <?php foreach ($IMAGE as $image):  if ($image->Image_id == $occupation_house_r->house_id) {?>
+
+                                                        <a data-target="#see_house_details_<?php echo($occupation_house_r->house_id); ?>" data-toggle="modal" href="#"><img alt="House image" class="img-responsive" src="<?php echo(base_url()).$image->image_name; ?>"></a>
+
+                                                        <div class="carousel-caption">
+                                                            <p>House no <?php echo ' '.$occupation_house_r->house_id ?></p>
+                                                        </div>
+
+
+                                                        <div class="modal inmodal" id="see_house_details_<?php echo($occupation_house_r->house_id); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content animated bounceInRight">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                                                                        <h4 class="modal-title">Details for <strong><?php echo($occupation_house_r->type); ?></strong> </h4>
+                                                                        <img alt="House image" class="img-responsive" src="<?php echo(base_url()).$image->image_name; ?>">
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+
+                                                                        <div class="form-group">
+                                                                            <label>Owner no:</label>
+                                                                            <input class="form-control" value="<?php echo($occupation_house_r->owner); ?>" disabled="disabled">
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Description</label>
+                                                                            <input type="text" class="form-control" value="<?php echo($occupation_house_r->type); ?>" disabled="disabled">
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Date posted</label>
+                                                                            <input type="text" class="form-control" value="<?php echo($occupation_house_r->house_post_date); ?>" disabled="disabled">
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>House location</label>
+                                                                            <input type="text" class="form-control" value="<?php echo($occupation_house_r->location); ?>" disabled="disabled">
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Price</label>
+                                                                            <input type="text" class="form-control" value="<?php echo($occupation_house_r->price); ?>" disabled="disabled">
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+
+                                                    <?php } endforeach;?>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <?php
+                                    }
+                                }
+                                ?>
+
+
+
+
+
+                          </div>
+
+                            <?php if($INTEREST_BASED_RECOMMENDATION != ""){ ?>
+                                <a href="<?= base_url();?>index.php/housesearch/show_recommendations"><b>See all recommended houses</b></a>
+                            <?php  }
+                           if($INTEREST_BASED_RECOMMENDATION == "" && $OCCUPATION_BASED_RECOMMENDATION == "" && $AGE_BASED_RECOMMENDATION == "" && $GENDER_BASED_RECOMMENDATION == ""){?>
+                             <b> No recommendations yet,</b><br> <b> fill in required data first</b> <?php }?>
                         </div>
                     </div>
                 </div>
@@ -291,29 +757,44 @@
             </div>
         </div>
 
-<!-- message -->
+    <!-- message -->
 
-         <div class="small-chat-box fadeInRight animated">
-            <div class="heading" draggable="true">
-                <small class="chat-date pull-right">
-                    02.19.2015
-                </small>
-                <p> Send us a Message </p>
-            </div>
-
-            <div class="form-chat">
-                <div class="input-group input-group-sm"><input type="text" class="form-control"> <span class="input-group-btn"> <button
-                        class="btn btn-primary" type="button">Send
-                </button> </span></div>
-            </div>
+    <div class="small-chat-box fadeInUpBig animated">
+        <div class="heading" draggable="true">
+            <small class="chat-date pull-right">
+                02.19.2015
+            </small>
+            <p> Send us a Message </p>
         </div>
 
-         <div id="small-chat">
-            <span class="badge badge-warning pull-right">Send us a message</span>
-            <a class="open-small-chat">
-                <i class="fa fa-comments"></i>
-            </a>
-        </div>
+        <div class="form-chat">
 
-        <!-- message end-->
+            <form action="<?= base_url();?>index.php/housesearch/post_messages" id="form" method="post" enctype="multipart/form-data" autocomplete="on">
+                <button type="submit">Check House details for owner no and select it here</button>
+                <label>Recipient number:</label>
+                <select name="recipient" class="form-control">
+                    <?php foreach($USERS_NUMBERS as $no){ ?>
+                        <option> <?php echo ($no->user_id); ?> </option>
+                    <?php } ?>
+                </select>
+                <div class="hide"><input type="text" value="<?php echo( $this->uri->segment(1));?>" name="theuri"></div>
+                <label>Text:</label>
+                <div class="form-group">
+                    <textarea class="form-control" required="required" name="message" rows="5">
+                        <?php foreach ($USER_DETAILS as $profile): echo("\nPhone: ".$profile->phone_number."\n"."Email: ".$profile->email); endforeach; ?>
+                    </textarea>
+                </div>
+
+                <button class="btn btn-sm btn-primary pull-right " type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="small-chat">
+        <span class="badge badge-warning pull-right">Send us a message</span>
+        <a class="open-small-chat">
+            <i class="fa fa-comments"></i>
+        </a>
+    </div>
+    <!-- message end-->
         <?php require_once("includes/footer.php"); 

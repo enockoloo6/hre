@@ -50,5 +50,45 @@
   font-weight: 300;
 }
 
-
 /*end of google maps*/
+
+/*houserating css*/
+
+#hide {
+  display:none;
+}
+
+.houserating input {
+  position:absolute;
+  filter:alpha(opacity=0);
+  -moz-opacity:0;
+  -khtml-opacity:0;
+  opacity:0;
+  cursor:pointer;
+  width:17px;
+}
+
+.houserating span {
+  width:24px;
+  height:16px;
+  line-height:16px;
+  padding:1px 22px 1px 0; /* 1px FireFox fix */
+  background:url(stars.png) no-repeat -22px 0;
+}
+
+/* Change span immediately following the checked radio */
+
+.houserating input:checked + span {
+  background-position:-22px 0;
+}
+
+/* Reset all remaining stars back to default background.
+   This supersedes the above due to its ordering. */
+
+.houserating input:checked + span ~ span {
+  background-position:0 0;
+}
+
+
+
+/*houserating css*/

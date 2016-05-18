@@ -24,7 +24,6 @@ class User_model extends CI_Model
     }
 
 
-
     //create_member
 
     function new_user($f_name,$other_names,$phone_number,$national_id,$password,$email,$role=0)
@@ -101,6 +100,20 @@ class User_model extends CI_Model
         return $users->result();
     }
 
+    function get_user_numbers()
+    {
+        $user_id = $this->session->userdata('user_id');
+        $user = array(
+            'user_id !=' => $user_id
+        );
+
+        $this->db->select('user_id');
+        $this->db->from('users');
+        $this->db->where($user);
+        $user_id =  $this->db->get();
+        return $user_id->result();
+    }
+
 // this is to be used during the sign up to initialize the photo
     function get_profile_image_for_the_logged_in_user($user_identification){
 
@@ -114,7 +127,7 @@ class User_model extends CI_Model
             $this->db->from('images');
             $this->db->where($image);
             $query = $this->db->get();
-            $result = $query->row()->image_name;
+            $query->row()->image_name;
             return $result;
 
     $this->session->set_userdata(array('image_name' => $result));
@@ -245,5 +258,49 @@ class User_model extends CI_Model
         return $updated;
     }
 
-}
+    /***********************************check if the interest and occupaitons exist***********************************************/
+    function check_interests_age_gender_occupations(){
+        $uid = $this->session->userdata('user_id');
 
+        $this->db->select('age');
+        $this->db->from('users');
+        $this->db->where('user_id', $uid);
+        $query1 = $this->db->get();
+
+        $this->db->select('gender');
+        $this->db->from('users');
+        $this->db->where('user_id', $uid);
+        $query2 = $this->db->get();
+
+        $this->db->select('user_id');
+        $this->db->from('user_occupation');
+        $this->db->where('user_id', $uid);
+        $query3 = $this->db->get();
+
+        $this->db->select('user_id');
+        $this->db->where('user_id', $uid);
+        $this->db->from('user_interest');
+        $this->db->where('user_id', $uid);
+        $query4 = $this->db->get();
+
+        if($query1->num_rows() == 0){
+            return true;
+        } 
+
+        elseif($query2->num_rows() == 0){
+            return true;
+        }
+
+        elseif($query3->num_rows() == 0){
+            return true;
+        }
+        elseif($query4->num_rows() == 0){
+            return true;
+        }
+
+        else{
+            return false;
+        }
+    }
+
+}

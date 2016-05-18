@@ -1,115 +1,165 @@
 <?php require_once("includes/header.php"); ?>
 
 
-               <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-sm-4">
-                    <h2>This is main title</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="index.html">This is</a>
-                        </li>
-                        <li class="active">
-                            <strong>Search results for the houses</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-sm-8">
-                    <div class="title-action">
-                        <a href="<?= base_url();?>index.php/housesearch" class="btn btn-primary">Home</a>
-                    </div>
-                </div>
-            </div>
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <?php
+                            $location = ($this->input->post('house_location'));
+                            $type = ($this->input->post('house_type'));
+                            $price = ($this->input->post('price'));
 
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-content">
-                            <h2>
-                                2,160 results found for: <span class="text-navy">“Admin Theme”</span>
-                            </h2>
-                            <small>Request time  (0.23 seconds)</small>
+                            if($price== 10003000){$price = "1000-3000";}
+                            if($price== 30015000){$price = "3001-5000";}
+                            if($price== 500110000){$price = "5001-10000";}
+                            if($price== 1000115000){$price = "10001-15000";}
+                            if($price== 1500120000){$price = "15001-20000";}
+                            if($price== "above20"){$price = "20000+";}
+                        ?>
 
-                            <div class="search-form">
-                                <form action="index.html" method="get">
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Admin Theme" name="search" class="form-control input-lg">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-lg btn-primary" type="submit">
-                                                Search
-                                            </button>
-                                        </div>
+                        <div class="col-sm-12" style="color: #006621"> <div class="col-sm-9"> <h2><?php echo $type." price range of ".$price." located in ".$location?></h2></div>
+                        <a href="<?= base_url();?>index.php/housesearch" class="btn btn-primary pull-right"><span class="fa fa-arrow-circle-left"></span>Back to house search</a></div>
+
+                        <div class="cliens-list">
+                            <ul class="nav nav-tabs">
+                                <span style="color: orange" class="pull-right">
+
+                                    <?php
+                                    if($this->input->post('house_location')){
+                                        $no_of_houses_found = 0;
+                                        foreach ($SEARCH_RESULTS as $userdetails):
+                                            foreach ($userdetails as $number):
+                                                $no_of_houses_found++;
+                                            endforeach;
+                                            endforeach; echo $no_of_houses_found." results found";} ?>
+
+                                </span>
+                                <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-institution"></i> Houses found</a></li>
+<!--                                <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-briefcase"></i> More Details</a></li>-->
+                            </ul>
+                            <div class="tab-content">
+                                <div>
+                                    <div class="full-height-scroll">
+
+                                        <?php
+                                           if($this->input->post('house_location')){
+                                                if($SEARCH_RESULTS[2]!= ""){ ?>
+
+                                                <?php  foreach ($SEARCH_RESULTS[2] as $userdetails[0]): ?>
+                                                            <?php
+                                                            foreach($userdetails as $s_houses){
+                                                            ?>
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-hover">
+                                                                    <tbody>
+
+                                                                    <tr>
+                                                                        <th>Picture</th>
+                                                                        <th>Type</a></th>
+                                                                        <th Owner </th>
+                                                                        <th> House number</th>
+                                                                        <th> Location </th>
+                                                                        <th> Details</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="client-avatar"><img alt="image" src="img/a2.jpg"> </td>
+                                                                        <td><a data-toggle="tab" href="#contact-1" class="client-link"> <?php echo $s_houses->type;?> </a></td>
+                                                                        <td class="contact-type"><i class="fa fa-envelope"> </i></td>
+                                                                        <td> <?php echo $s_houses->house_id; ?></td>
+                                                                        <td> <?php echo $s_houses->location;?></td>
+                                                                        <td class="client-status"><a data-toggle="tab" href="#<?php echo $s_houses->house_id?>_tab"><span class="label label-primary">Active</a></span></td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                <?php } endforeach; } ?>
+
+                                              <?php if($SEARCH_RESULTS[1]!= ""){ ?>
+                                        <h4> <?php echo "List of ".$type." houses within range of ".$price." located in other estates" ?></h4>
+
+                                            <div class="table-responsive">
+                                                       <table class="table table-striped table-hover">
+                                                           <tbody>
+                                                               <tr>
+                                                                   <th>Picture</th>
+                                                                   <th>Type</a></th>
+                                                                   <th Owner </th>
+                                                                   <th> House number</th>
+                                                                   <th> Location </th>
+                                                                   <th> Details</th>
+                                                               </tr>
+                                                           <?php foreach ($SEARCH_RESULTS[1] as $userdetails[0]): ?>
+                                                                       <?php
+                                                               foreach($userdetails as $s_houses){
+                                                                   foreach($HOUSE_DETAILS as $houses){
+                                                                       if($s_houses->house_id == $houses->house_id ){
+                                                                           ?>
+                                                                               <tr>
+                                                                                   <td class="client-avatar"><img alt="image" src="img/a2.jpg"> </td>
+                                                                                   <td><a data-toggle="tab" href="#contact-1" class="client-link"> <?php echo $houses->type;?> </a></td>
+                                                                                   <td class="contact-type"><i class="fa fa-envelope"> </i></td>
+                                                                                   <td> <?php echo $houses->house_id; ?></td>
+                                                                                   <td> <?php echo $houses->location;?></td>
+                                                                                   <td class="client-status"><a data-toggle="tab" href="#<?php echo $houses->house_id?>_tab"><span class="label label-primary">Active</a></span></td>
+                                                                               </tr>
+                                                                       <?php }}}?>
+                                                           <?php endforeach;?>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                   <?php } ?>
+                                               <?php if($SEARCH_RESULTS[2]!= "" || $SEARCH_RESULTS[2]!= NULL){ ?>
+                                                   <h4>List of houses within range of sh <?php echo " ".$price." also located in in the same place"?></h4>
+
+                                                   <div class="table-responsive">
+                                                       <table class="table table-striped table-hover">
+                                                           <tbody>
+                                                               <tr>
+                                                                   <th>Picture</th>
+                                                                   <th>Type</a></th>
+                                                                   <th Owner </th>
+                                                                   <th> House number</th>
+                                                                   <th> Location </th>
+                                                                   <th> Details</th>
+                                                               </tr>
+                                                           <?php foreach ($SEARCH_RESULTS[0] as $userdetails[0]):
+                                                               foreach($userdetails as $s_houses){
+                                                                   foreach($HOUSE_DETAILS as $houses){
+                                                                       if($s_houses->house_id == $houses->house_id ){
+                                                                           ?>
+                                                                           <tr>
+                                                                               <td class="client-avatar"><img alt="image" src="img/a2.jpg"> </td>
+                                                                               <td><a data-toggle="tab" href="#contact-1" class="client-link"> <?php echo $houses->type;?> </a></td>
+                                                                               <td class="contact-type"><i class="fa fa-envelope"> </i></td>
+                                                                               <td> <?php echo $houses->house_id; ?></td>
+                                                                               <td> <?php echo $houses->location;?></td>
+                                                                               <td class="client-status"><a data-toggle="tab" href="#<?php echo $houses->house_id?>_tab"><span class="label label-primary">Active</a></span></td>
+                                                                           </tr>
+                                                                       <?php }}}?>
+                                                           <?php endforeach;}?>
+
+                                                           </tbody>
+                                                       </table>
+                                                   </div>
+                                               <?php } ?>
+
+
+
+
+
                                     </div>
-
-                                </form>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="search-result">
-                                <h3><a href="#">INSPINIA IN+ Admin Theme</a></h3>
-                                <a href="#" class="search-link">www.inspinia.com/inspinia</a>
-                                <p>
-                                    Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites
-                                    still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                </p>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="search-result">
-                                <h3><a href="#">WrapBootstrap - Bootstrap Themes & Templates</a></h3>
-                                <a href="#" class="search-link">https://wrapbootstrap.com/‎</a>
-                                <p>
-                                    WrapBootstrap is a marketplace for premium Bootstrap themes and templates. Impress your clients and visitors while using a single, rock-solid foundation.
-                                </p>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="search-result">
-                                <h3><a href="#">WrapBootstrap | Facebook</a></h3>
-                                <a href="#" class="search-link">https://www.facebook.com/wrapbootstrap‎</a>
-                                <p>
-                                    WrapBootstrap. 13672 likes · 508 talking about this. Marketplace for premium Bootstrap themes and templates. https://wrapbootstrap.com/
-                                </p>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="search-result">
-                                <h3><a href="#">Wrapbootstrap - Quora</a></h3>
-                                <a href="#" class="search-link">www.quora.com/Wrapbootstrap‎‎</a>
-                                <p>
-                                    If you are familiar with using any other HTML/CSS themes or WordPress themes then you shouldn't have any problems. If you have some experience using the ...
-                                </p>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="search-result">
-                                <h3><a href="#">Newspaper Template - Wrapbootstrap Free download ...</a></h3>
-                                <a href="#" class="search-link">https://wrapbootstrap.com/‎‎</a>
-                                <p>
-                                    What's black, white and red all over? The answer is Newspaper. A stylish magazine/news style theme inspired by black and white newsprint. The theme is.
-                                </p>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="search-result">
-                                <h3><a href="#">Admin Themes Wrapbootstrap</a></h3>
-                                <a href="#" class="search-link">https://wrapbootstrap.com/themes/admin‎‎</a>
-                                <p>
-                                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                </p>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="text-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-white" type="button"><i class="fa fa-chevron-left"></i></button>
-                                    <button class="btn btn-white">1</button>
-                                    <button class="btn btn-white  active">2</button>
-                                    <button class="btn btn-white">3</button>
-                                    <button class="btn btn-white">4</button>
-                                    <button class="btn btn-white">5</button>
-                                    <button class="btn btn-white">6</button>
-                                    <button class="btn btn-white">7</button>
-                                    <button class="btn btn-white" type="button"><i class="fa fa-chevron-right"></i> </button>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            </div>
         </div>
-        </div>
+
 
 <?php require_once("includes/footer.php"); 
